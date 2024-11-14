@@ -1,11 +1,29 @@
 'use client'
+
+import { useAuthStore } from "@/stores/authStore";
+import { useCartsStore } from "@/stores/cartsStore";
 import { useHeaderStore } from "@/stores/headerStore";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import Image from "next/image";
 import Link from "next/link";
+// import { useRouter } from "next/navigation";
 export default function Header(){
-    const { toggleOpen,toggleModalLogin,open } = useHeaderStore()
+    const { toggleOpen,open } = useHeaderStore()
+    const { user,isAuthenticated } = useAuthStore()
+    const { carts } = useCartsStore()
+
+  // const handleAuthAction = () => {
+  //   if (isAuthenticated) {
+  //     // Logout
+  //     logout()
+  //     router.push('/login')
+  //   } else {
+  //     // Redirect ke login
+  //     router.push('/login')
+  //   }
+  // }
     return (
         <header className="container absolute mx-auto bg-transparent">
           <div className="w-full">
@@ -46,16 +64,16 @@ export default function Header(){
                       <Link href="#destination"> Destination </Link>
                     </li>
                     <li>
-                      <Link href="#"> Exclusive Tour </Link>
+                      <Link href="#"> Promo </Link>
                     </li>
                     <li>
-                      <Link href="#"> Review </Link>
+                      <Link href="#"> Cart </Link>
                     </li>
                    
                       <li>
-                      <a onClick={toggleModalLogin} className="text-green-400">
+                      <Link href={'/auth/login'} className="text-green-400">
                         Log In
-                      </a>
+                      </Link>
                     </li>
                    </ul>
                 </div>}
@@ -67,18 +85,18 @@ export default function Header(){
               <div className="flex flex-row items-center justify-between max-w-screen-xl gap-16 p-2 rounded-lg bg-white/65">
                 <ul className="flex flex-row justify-center gap-8 font-thin text-black/85 ">
                   <li>
-                    <Link href="#hero" className="p-2 rounded-md hover:text-white hover:bg-primary-100">
+                    <Link href={"/#hero" }className="p-2 inline-flex items-center gap-2  rounded-md hover:text-white hover:bg-primary-100">
                       Home
                     </Link>
                   </li>
                   <li>
-                    <Link href="#about" className="p-2 rounded-md hover:text-white hover:bg-primary-100">
+                    <Link href={'/#about'} className="p-2 inline-flex items-center gap-2  rounded-md hover:text-white hover:bg-primary-100">
                       About
                     </Link>
                   </li>
                   <li>
-                    <Link href="#destination" className="p-2 rounded-md hover:text-white hover:bg-primary-100">
-                      Destination
+                    <Link href={'/#promo'} className="p-2 inline-flex items-center gap-2  rounded-md hover:text-white hover:bg-primary-100">
+                      Promo
                     </Link>
                   </li>
                 </ul>
@@ -87,21 +105,35 @@ export default function Header(){
                 </h1>
                 <ul className="flex flex-row justify-center gap-8 font-thin text-black/85 ">
                   <li>
-                    <Link href="#" className="p-2 rounded-md hover:text-white hover:bg-primary-100">
-                      Exclusive Tour
+                    <Link href={'/#destination'} className="p-2 rounded-md inline-flex items-center gap-2  hover:text-white hover:bg-primary-100">
+                      Destination
                     </Link>
                   </li>
+                  
                   <li>
-                    <Link href="#" className="p-2 rounded-md hover:text-white hover:bg-primary-100">
-                      Review
+                    <Link href="/cart" className="p-2 inline-flex items-center gap-2  rounded-md hover:text-white hover:bg-primary-100">
+                      <FontAwesomeIcon className="mr-2" icon={faCartShopping}/>
+                      Cart ({carts.length})
                     </Link>
                   </li>
                  
+                  {user && isAuthenticated ? 
                     <li>
-                    <a onClick={toggleModalLogin} className="p-2 text-black border border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
-                      <FontAwesomeIcon icon={faUser} className="mr-2" /> Login
-                    </a>
-                  </li>
+                      <Link href={'/auth/Login'} className="p-2 text-black border inline-flex items-center gap-2  border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
+                        <Image 
+                          width={1000}
+                          height={1000}
+                          alt="Profile"
+                          className="size-6 rounded-full bg-cover bg-center"
+                          src={user.profilePictureUrl}
+                        /> Logout
+                      </Link>
+                    </li> 
+                    : <li>
+                      <Link href={'/auth/Login'} className="p-2 text-black border border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
+                        <FontAwesomeIcon icon={faUser} className="mr-2" /> Login
+                      </Link>
+                    </li>}
                   
                 </ul>
               </div>

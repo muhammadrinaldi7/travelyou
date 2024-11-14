@@ -1,12 +1,9 @@
-import AboutSection from "@/components/section/AboutSection";
-import HeroSection from "@/components/section/HeroSection";
-
-
+'use client'
+import { LandingPage } from "./user/LandingPage";
 export default function Home() {
   return (
     <>
-    <HeroSection/>
-    <AboutSection/>
+      <LandingPage/>
     </>
   );
 }

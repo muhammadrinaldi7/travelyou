@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { Categories } from "./categoryStore";
 
 
-interface Activities{
+export interface Activities{
   id: string;
   categoryId: string;
   category: Categories;

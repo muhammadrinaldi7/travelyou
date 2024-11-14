@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import {  Pacifico, Lexend_Deca,Lato } from 'next/font/google';
+import LayoutProvider from "@/components/layout/LayoutProvider";
 import Header from "@/components/layout/header";
-
 const monserrat = Pacifico({
   variable: '--font-monserrat',
   subsets: ['latin'],
@@ -39,8 +39,11 @@ export default function RootLayout({
       <body
         className={`font-desc ${monserrat.variable} ${SansNarow.variable} ${Lexend.variable} antialiased`}
       >
-        <Header/>
+      <LayoutProvider>
+      <Header/>
+
         {children}
+      </LayoutProvider>
       </body>
     </html>
   );
