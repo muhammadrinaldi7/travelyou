@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Slider from 'react-slick';
 
 export const PromoBanner = () => {
@@ -143,7 +144,7 @@ export const PromoBanner = () => {
         }
     ]
     return(
-        <section className="py-5 container mx-auto bg-gray-100"  id='promo'>
+        <section className="py-5 container mx-auto bg-gradient-to-b from-gray-100 to-white"  id='promo'>
         {/* Banner */}
         <h1 className='text-2xl md:text-6xl text-primary-300 text-center font-tittle mb-2'>Promo Terbaru</h1>
         <div className="container px-10 mx-auto">
@@ -165,9 +166,10 @@ export const PromoBanner = () => {
                     </Slider>
         </div>
         {/* Promo List */}
-        <div className="mt-5 p-4">
+        <div className="mt-5 w-full flex flex-col p-4">
             {/* <h2 className="text-2xl font-semibold">Promo Terbaru</h2> */}
-            <ul className="mt-4 mx-auto px-5 grid grid-cols-1 md:grid-cols-3 gap-3">
+            <Link href={'/'} className='self-end hover:underline hover:text-primary-200 mr-5'>See All</Link>
+            <ul className="mt-4 px-5 grid grid-cols-1 md:grid-cols-3 gap-3">
                 {promos.slice(0,3).map((promo) => (
                     <li key={promo.id} className="overflow-auto rounded-lg shadow transition hover:shadow-primary-300 hover:shadow-lg">
                         <Image

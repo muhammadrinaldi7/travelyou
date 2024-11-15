@@ -43,18 +43,18 @@ export default function LayoutProvider({
     checkAuthentication()
 
     // Optional: Tambahkan event listener untuk storage changes
-    window.addEventListener('storage', checkAuthentication)
+    // window.addEventListener('storage', checkAuthentication)
 
-    // Cleanup listener
-    return () => {
-      window.removeEventListener('storage', checkAuthentication)
-    }
+    // // Cleanup listener
+    // return () => {
+    //   window.removeEventListener('storage', checkAuthentication)
+    // }
   }, [login, logout])
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+      <div className="flex items-center justify-center h-screen">
+        <div className="w-32 h-32 border-t-2 border-b-2 border-blue-500 rounded-full animate-spin"></div>
       </div>
     )
   }

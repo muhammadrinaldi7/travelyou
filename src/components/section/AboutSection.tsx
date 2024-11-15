@@ -6,7 +6,7 @@ const AboutSection = () => {
    
     return (
         <>
-        <section id="about" className="relative min-h-screen overflow-hidden bg-gray-100">
+        <section id="about" className="relative container mx-auto overflow-hidden bg-gray-100">
             <div
                
                 className="absolute inset-0 bg-cover md:bg-contain opacity-50 lg:scale-150 bg-center z-[1] bg-no-repeat"

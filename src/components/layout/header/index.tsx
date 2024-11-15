@@ -1,5 +1,7 @@
 'use client'
 
+import LogoutModal from "@/components/modals/LogoutModals";
+import { ProfileModal } from "@/components/modals/ProfileModals";
 import { useAuthStore } from "@/stores/authStore";
 import { useCartsStore } from "@/stores/cartsStore";
 import { useHeaderStore } from "@/stores/headerStore";
@@ -8,12 +10,21 @@ import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 // import { useRouter } from "next/navigation";
 export default function Header(){
     const { toggleOpen,open } = useHeaderStore()
-    const { user,isAuthenticated } = useAuthStore()
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [profileModal,setProfileModal] = useState(false)
+    const { user,isAuthenticated,logout } = useAuthStore()
     const { carts } = useCartsStore()
-
+    const router = useRouter()
+    const handleLogout = () => {
+      logout();
+      setIsModalOpen(false);
+      router.push('/');
+  };
   // const handleAuthAction = () => {
   //   if (isAuthenticated) {
   //     // Logout
@@ -26,6 +37,11 @@ export default function Header(){
   // }
     return (
         <header className="container absolute mx-auto bg-transparent">
+          <LogoutModal
+              isOpen={isModalOpen}
+              onClose={()=>setIsModalOpen(false)}
+              onConfirm={handleLogout}
+              />
           <div className="w-full">
             {/* NavMobile */}
             <div className="fixed z-30 flex items-center justify-between w-full h-16 px-6 mt-2 bg-transparent top-2 md:hidden">
@@ -35,8 +51,11 @@ export default function Header(){
                 </a>
               </div>
               
-              <div className="flex flex-row gap-6">
-            
+              <div className="flex items-center flex-row gap-6">
+              <div className="flex items-center p-2 justify-center rounded-md border border-white bg-white/75">
+                    <FontAwesomeIcon icon={faCartShopping}/>
+                    <h1 className="ml-2">Carts ({carts.length})</h1>
+              </div>
                 <div>
                   <button
                     type="button"
@@ -51,9 +70,20 @@ export default function Header(){
                   </button>
                 </div>
                 {open && <div
-                  className={`fixed px-8 py-4 rounded-lg bg-gray-50/70 right-4 top-20 `}
+                  className={`fixed pb-4 overflow-hidden rounded-lg bg-white/70 right-4 top-20 `}
                 >
-                  <ul className="flex flex-col gap-2">
+                {user && 
+                  <div className="flex bg-white/85  py-2 w-full px-2 items-center justify-center gap-2">
+                    <Image 
+                    width={100}
+                    height={100}
+                    className="bg-cover w-12 rounded-full bg-center"
+                    alt="Profile Picture"
+                    src={user.profilePictureUrl}
+                    />
+                    <h1>{user.name.split(" ")[1]}</h1>
+                  </div>}
+                  <ul className="flex px-6 flex-col gap-2">
                     <li>
                       <Link href="#home"> Home </Link>
                     </li>
@@ -64,20 +94,22 @@ export default function Header(){
                       <Link href="#destination"> Destination </Link>
                     </li>
                     <li>
-                      <Link href="#"> Promo </Link>
+                      <Link href="#promo"> Promo </Link>
                     </li>
+                    {isAuthenticated && user ? <li>
+                    <button onClick={()=>setIsModalOpen(true)} className="text-red-400">
+                        Log Out
+                    </button>
+                    </li>:
                     <li>
-                      <Link href="#"> Cart </Link>
-                    </li>
-                   
-                      <li>
-                      <Link href={'/auth/login'} className="text-green-400">
-                        Log In
-                      </Link>
-                    </li>
+                    <Link href={'/auth/login'} className="text-green-400">
+                      Log In
+                    </Link>
+                  </li>}
                    </ul>
                 </div>}
               </div>
+              
             </div>
     
             {/* NavDesktop */}
@@ -119,25 +151,28 @@ export default function Header(){
                  
                   {user && isAuthenticated ? 
                     <li>
-                      <Link href={'/auth/Login'} className="p-2 text-black border inline-flex items-center gap-2  border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
+                      <button onClick={()=>setProfileModal(!profileModal)} className="p-2 text-black border inline-flex items-center gap-2  border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
                         <Image 
                           width={1000}
                           height={1000}
                           alt="Profile"
                           className="size-6 rounded-full bg-cover bg-center"
                           src={user.profilePictureUrl}
-                        /> Logout
-                      </Link>
+                        /> Profile
+                      </button>
                     </li> 
                     : <li>
-                      <Link href={'/auth/Login'} className="p-2 text-black border border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
+                      <Link href={'/auth/Login'} className="p-2 text-black border inline-flex items-center gap-2 border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
                         <FontAwesomeIcon icon={faUser} className="mr-2" /> Login
                       </Link>
                     </li>}
                   
                 </ul>
               </div>
+              {profileModal && <ProfileModal onOpen={()=>setIsModalOpen(!isModalOpen)} class="top-10"/>}
+
             </div>
+
           </div>
           
          

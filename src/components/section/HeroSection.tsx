@@ -6,7 +6,7 @@ const HeroSection = () => {
         <>
         <section
                 id="hero"
-                className=" bg-background-light"
+                className="container mx-auto bg-background-light"
                 style={{ backgroundImage: `url(/img/hero.webp)`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             >
                 <div className="flex items-center max-w-screen-xl px-4 py-32 mx-auto">

@@ -23,7 +23,7 @@ const LoginPage = () => {
                 sessionStorage.setItem('userSession', JSON.stringify(logRes.data))
                 Cookies.set('token',logRes.token)
                 loginStore(logRes.data)
-                router.push('/')
+                setTimeout(()=>{router.push('/')},2000)
                 // Aksi setelah login berhasil, seperti navigasi ke halaman lain
             },
             (error) => {
