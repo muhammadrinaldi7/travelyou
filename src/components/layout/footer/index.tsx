@@ -32,20 +32,20 @@ const bankLogos = [
 
 const Footer: React.FC = () => {
     return (
-        <footer className="bg-primary-300  text-white">
-            <div className="px-4 pt-16 pb-8 container mx-auto">
+        <footer className="container mx-auto text-white bg-primary-300">
+            <div className="px-5 pt-16 pb-8 ">
                 {/* Footer Content */}
-                <div className="grid md:grid-cols-4 gap-8">
+                <div className="grid gap-8 md:grid-cols-4">
                     {/* Tentang Perusahaan */}
                     <div>
-                        <h3 className="text-2xl font-bold mb-4">TravelYouuu</h3>
-                        <p className="text-white mb-4">
+                        <h3 className="mb-4 text-2xl font-bold">TravelYouuu</h3>
+                        <p className="mb-4 text-white">
                             Jelajahi dunia dengan mudah dan nyaman bersama TravelYouuu. 
                             Pengalaman perjalanan terbaik hanya dalam satu sentuhan.
                         </p>
                         
                         {/* Sosial Media */}
-                        <div className="flex space-x-4 mt-4">
+                        <div className="flex mt-4 space-x-4">
                             {[
                                 { icon: <FontAwesomeIcon icon={faFacebook}/>, link: '#' },
                                 { icon: <FontAwesomeIcon icon={faInstagram}/>, link: '#' },
@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
                                 <a 
                                     key={index} 
                                     href={social.link} 
-                                    className="text-white hover:text-white transition-colors"
+                                    className="text-white transition-colors hover:text-white"
                                 >
                                     {social.icon}
                                 </a>
@@ -65,7 +65,7 @@ const Footer: React.FC = () => {
 
                     {/* Quick Links */}
                     <div>
-                        <h4 className="font-bold mb-4">Tautan Cepat</h4>
+                        <h4 className="mb-4 font-bold">Tautan Cepat</h4>
                         <ul className="space-y-2">
                             {[
                                 'Beranda',
@@ -77,7 +77,7 @@ const Footer: React.FC = () => {
                                 <li key={index}>
                                     <a 
                                         href="#" 
-                                        className="text-white hover:text-white transition-colors"
+                                        className="text-white transition-colors hover:text-white"
                                     >
                                         {link}
                                     </a>
@@ -88,19 +88,19 @@ const Footer: React.FC = () => {
 
                     {/* Metode Pembayaran */}
                     <div>
-                        <h4 className="font-bold mb-4">Metode Pembayaran</h4>
+                        <h4 className="mb-4 font-bold">Metode Pembayaran</h4>
                         <div className="grid grid-cols-3 gap-4">
                             {bankLogos.map((bank, index) => (
                                 <div 
                                     key={index} 
-                                    className="bg-white/10 rounded-lg p-2 flex items-center justify-center"
+                                    className="flex items-center justify-center p-2 rounded-lg bg-white/10"
                                 >
                                     <Image 
                                         src={bank.imageUrl} 
                                         alt={bank.name}
                                         width={60}
                                         height={30}
-                                        className="grayscale hover:grayscale-0 transition-all"
+                                        className="transition-all grayscale hover:grayscale-0"
                                     />
                                 </div>
                             ))}
@@ -108,8 +108,8 @@ const Footer: React.FC = () => {
                     </div>
 
                     {/* Kontak */}
-                    <div className='flex items-center flex-col'>
-                        <h4 className="font-bold  mb-6">Hubungi Kami</h4>
+                    <div className='flex flex-col items-center'>
+                        <h4 className="mb-6 font-bold">Hubungi Kami</h4>
                         <div className="space-y-6">
                             <div className="flex items-center space-x-3">
                                 <FontAwesomeIcon icon={faMailForward} className="w-5 h-5 text-white" />
@@ -128,7 +128,7 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Footer Bottom */}
-                <div className="mt-6 pt-6 border-t border-white text-center">
+                <div className="pt-6 mt-6 text-center border-t border-white">
                     <p className="text-white">
                         © {new Date().getFullYear()} TravelYouuu. All Rights Reserved.
                         Designed with ❤️ by TravelYouuu Team

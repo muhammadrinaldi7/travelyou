@@ -51,8 +51,8 @@ export default function Header(){
                 </a>
               </div>
               
-              <div className="flex items-center flex-row gap-6">
-              <div className="flex items-center p-2 justify-center rounded-md border border-white bg-white/75">
+              <div className="flex flex-row items-center gap-6">
+              <div className="flex items-center justify-center p-2 border border-white rounded-md bg-white/75">
                     <FontAwesomeIcon icon={faCartShopping}/>
                     <h1 className="ml-2">Carts ({carts.length})</h1>
               </div>
@@ -73,17 +73,17 @@ export default function Header(){
                   className={`fixed pb-4 overflow-hidden rounded-lg bg-white/70 right-4 top-20 `}
                 >
                 {user && 
-                  <div className="flex bg-white/85  py-2 w-full px-2 items-center justify-center gap-2">
+                  <div className="flex items-center justify-center w-full gap-2 px-2 py-2 bg-white/85">
                     <Image 
                     width={100}
                     height={100}
-                    className="bg-cover w-12 rounded-full bg-center"
+                    className="w-12 bg-center bg-cover rounded-full"
                     alt="Profile Picture"
                     src={user.profilePictureUrl}
                     />
                     <h1>{user.name.split(" ")[1]}</h1>
                   </div>}
-                  <ul className="flex px-6 flex-col gap-2">
+                  <ul className="flex flex-col gap-2 px-6">
                     <li>
                       <Link href="#home"> Home </Link>
                     </li>
@@ -91,7 +91,7 @@ export default function Header(){
                       <Link href="#about"> About </Link>
                     </li>
                     <li>
-                      <Link href="#destination"> Destination </Link>
+                      <Link href="#activity"> Activity </Link>
                     </li>
                     <li>
                       <Link href="#promo"> Promo </Link>
@@ -117,17 +117,17 @@ export default function Header(){
               <div className="flex flex-row items-center justify-between max-w-screen-xl gap-16 p-2 rounded-lg bg-white/65">
                 <ul className="flex flex-row justify-center gap-8 font-thin text-black/85 ">
                   <li>
-                    <Link href={"/#hero" }className="p-2 inline-flex items-center gap-2  rounded-md hover:text-white hover:bg-primary-100">
+                    <Link href={"/#hero" }className="inline-flex items-center gap-2 p-2 rounded-md hover:text-white hover:bg-primary-100">
                       Home
                     </Link>
                   </li>
                   <li>
-                    <Link href={'/#about'} className="p-2 inline-flex items-center gap-2  rounded-md hover:text-white hover:bg-primary-100">
+                    <Link href={'/#about'} className="inline-flex items-center gap-2 p-2 rounded-md hover:text-white hover:bg-primary-100">
                       About
                     </Link>
                   </li>
                   <li>
-                    <Link href={'/#promo'} className="p-2 inline-flex items-center gap-2  rounded-md hover:text-white hover:bg-primary-100">
+                    <Link href={'/#promo'} className="inline-flex items-center gap-2 p-2 rounded-md hover:text-white hover:bg-primary-100">
                       Promo
                     </Link>
                   </li>
@@ -137,13 +137,13 @@ export default function Header(){
                 </h1>
                 <ul className="flex flex-row justify-center gap-8 font-thin text-black/85 ">
                   <li>
-                    <Link href={'/#destination'} className="p-2 rounded-md inline-flex items-center gap-2  hover:text-white hover:bg-primary-100">
-                      Destination
+                    <Link href={'/#activity'} className="inline-flex items-center gap-2 p-2 rounded-md hover:text-white hover:bg-primary-100">
+                      Activity
                     </Link>
                   </li>
                   
                   <li>
-                    <Link href="/cart" className="p-2 inline-flex items-center gap-2  rounded-md hover:text-white hover:bg-primary-100">
+                    <Link href="/cart" className="inline-flex items-center gap-2 p-2 rounded-md hover:text-white hover:bg-primary-100">
                       <FontAwesomeIcon className="mr-2" icon={faCartShopping}/>
                       Cart ({carts.length})
                     </Link>
@@ -151,18 +151,18 @@ export default function Header(){
                  
                   {user && isAuthenticated ? 
                     <li>
-                      <button onClick={()=>setProfileModal(!profileModal)} className="p-2 text-black border inline-flex items-center gap-2  border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
+                      <button onClick={()=>setProfileModal(!profileModal)} className="inline-flex items-center gap-2 p-2 text-black border border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
                         <Image 
                           width={1000}
                           height={1000}
                           alt="Profile"
-                          className="size-6 rounded-full bg-cover bg-center"
+                          className="bg-center bg-cover rounded-full size-6"
                           src={user.profilePictureUrl}
                         /> Profile
                       </button>
                     </li> 
                     : <li>
-                      <Link href={'/auth/Login'} className="p-2 text-black border inline-flex items-center gap-2 border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
+                      <Link href={'/auth/Login'} className="inline-flex items-center gap-2 p-2 text-black border border-white rounded-md cursor-pointer hover:text-black hover:bg-gray-200/75">
                         <FontAwesomeIcon icon={faUser} className="mr-2" /> Login
                       </Link>
                     </li>}

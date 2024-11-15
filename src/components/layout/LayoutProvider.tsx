@@ -61,7 +61,9 @@ export default function LayoutProvider({
     return(
         <>
         <QueryClientProvider client={queryClient}>
+          
             {children}
+          
         </QueryClientProvider>
         </>
     )

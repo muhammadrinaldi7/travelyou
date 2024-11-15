@@ -11,7 +11,7 @@ const endpoints = {
     updateUser: "/update-profile",
     updateRole: `/update-user-role/`,
     banner: "/banner",
-    promo: "/promo",
+    promo: "/promos",
     category: `${BASE_URL}/categories`,
     activity: "/activities",
     cart: "/cart",
