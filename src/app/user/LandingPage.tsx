@@ -1,4 +1,4 @@
-import Footer from "@/components/layout/footer"
+import React from "react"
 import AboutSection from "@/components/section/AboutSection"
 import ActivitySection from "@/components/section/ActivitySection"
 import HeroSection from "@/components/section/HeroSection"
@@ -11,7 +11,6 @@ export const LandingPage = () => {
             <AboutSection/>
             <PromoBanner/>
             <ActivitySection/>
-            <Footer/>
         </>
     )
 }

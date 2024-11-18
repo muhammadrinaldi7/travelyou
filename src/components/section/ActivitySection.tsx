@@ -1,7 +1,6 @@
-// components/ActivitySection.tsx
 import React from 'react';
 import Image from 'next/image';
-import { faCompass, faMountain, faPlane, faShip, faStar, faTent } from '@fortawesome/free-solid-svg-icons';
+import { faCompass,  faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { useFetchActivity } from '@/api/hooks/Activity/useFetchActivity';

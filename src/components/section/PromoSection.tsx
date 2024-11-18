@@ -85,6 +85,6 @@ export const PromoBanner = () => {
                 )) }
             </ul>
         </div>
-    </section>
+        </section>
     )
 }

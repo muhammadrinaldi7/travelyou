@@ -1,4 +1,3 @@
-// components/Footer.tsx
 import React from 'react';
 import Image from 'next/image';
 
@@ -30,7 +29,8 @@ const bankLogos = [
     },
 ];
 
-const Footer: React.FC = () => {
+
+const Footer = () => {
     return (
         <footer className="container mx-auto text-white bg-primary-300">
             <div className="px-5 pt-16 pb-8 ">

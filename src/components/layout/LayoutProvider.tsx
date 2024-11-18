@@ -17,24 +17,19 @@ export default function LayoutProvider({
     // Fungsi untuk memeriksa session
     const checkAuthentication = () => {
       try {
-        // Ambil data dari session storage
         const userSession = sessionStorage.getItem('userSession')
         
         if (userSession) {
-          // Parse data user
           const userData = JSON.parse(userSession)
           
-          // Set data user ke auth store
           login(userData)
         } else {
-          // Jika tidak ada session, pastikan logout
           logout()
         }
       } catch (error) {
         console.error('Error checking authentication:', error)
         logout()
       } finally {
-        // Selesaikan loading
         setIsLoading(false)
       }
     }
@@ -61,9 +56,7 @@ export default function LayoutProvider({
     return(
         <>
         <QueryClientProvider client={queryClient}>
-          
             {children}
-          
         </QueryClientProvider>
         </>
     )
