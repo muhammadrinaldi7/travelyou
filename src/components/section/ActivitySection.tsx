@@ -1,6 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { faCompass, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCompass,
+  faLocationDot,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useFetchActivity } from "@/api/hooks/Activity/useFetchActivity";
@@ -8,6 +12,9 @@ import endpoints from "@/api/endpoints";
 
 const ActivitySection: React.FC = () => {
   const { data: activityCategories } = useFetchActivity(endpoints.activity);
+  const filteredActivities = activityCategories?.data.filter(
+    (activity) => parseInt(activity.total_reviews) > 200
+  );
   return (
     <section
       id="activity"
@@ -26,12 +33,11 @@ const ActivitySection: React.FC = () => {
 
       {/* Grid Aktivitas */}
       <div className="grid gap-5 px-5 md:grid-cols-2 lg:grid-cols-4">
-        {activityCategories?.data?.slice(0, 4).map((activity) => (
+        {filteredActivities?.slice(0, 4).map((activity) => (
           <div
             key={activity.id}
             className="overflow-hidden transition-all duration-300 bg-white shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-2 group"
           >
-            {/* Gambar Aktivitas */}
             <div className="relative w-full h-56">
               <Image
                 src={activity.imageUrls[0] || "/img/favicon.ico"}
@@ -39,23 +45,27 @@ const ActivitySection: React.FC = () => {
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-110"
               />
-              {/* Ikon Aktivitas */}
+              <div className="absolute p-2 rounded-xl bg-white/85 top-4 left-4">
+                <h1 className="text-sm font-semibold">
+                  Riviews:{" "}
+                  <span className="font-bold text-primary-300">
+                    {activity.total_reviews.toLocaleString()}
+                  </span>
+                </h1>
+              </div>
               <div className="absolute p-2 rounded-full top-4 right-4 bg-white/80">
                 <FontAwesomeIcon icon={faStar} className="text-yellow-400" />{" "}
                 <span className="text-sm font-semibold">{activity.rating}</span>
               </div>
             </div>
-
-            {/* Deskripsi Aktivitas */}
             <div className="p-6">
               <h3 className="mb-2 text-xl font-bold text-gray-800">
                 {activity.title}
               </h3>
               <p className="mb-4 text-sm text-gray-600">
-                Provincy:{activity.province}, Kota: {activity.city}
+                <FontAwesomeIcon icon={faLocationDot} className="mr-2" />
+                {activity.province}, {activity.city}
               </p>
-
-              {/* Informasi Harga */}
               <div className="flex items-center justify-between">
                 <span className="text-sm font-semibold text-red-600 line-through">
                   Rp. {activity.price.toLocaleString()}
@@ -63,17 +73,15 @@ const ActivitySection: React.FC = () => {
                 <span className="font-semibold text-blue-600 text-md">
                   Rp. {activity.price_discount.toLocaleString()}
                 </span>
-
-                <button className="px-4 py-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
-                  Pesan Sekarang
-                </button>
               </div>
+              <button className="px-4 py-2 mt-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
+                Pesan Sekarang
+              </button>
             </div>
           </div>
         ))}
       </div>
 
-      {/* Tombol Lihat Semua */}
       <div className="mt-12 text-center">
         <Link
           href={"/user/activity"}

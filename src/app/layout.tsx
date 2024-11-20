@@ -4,6 +4,8 @@ import { Pacifico, Lexend_Deca, Lato } from "next/font/google";
 import LayoutProvider from "@/components/layout/LayoutProvider";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
+import { Toaster } from "react-hot-toast";
+
 const monserrat = Pacifico({
   variable: "--font-monserrat",
   subsets: ["latin"],
@@ -42,6 +44,7 @@ export default function RootLayout({
       >
         <LayoutProvider>
           <Header />
+          <Toaster position="top-right" />
           <div className="container mx-auto">{children}</div>
           <Footer />
         </LayoutProvider>

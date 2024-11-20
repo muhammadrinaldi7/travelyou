@@ -18,12 +18,13 @@ export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileModal, setProfileModal] = useState(false);
   const { user, isAuthenticated, logout } = useAuthStore();
-  const { carts } = useCartsStore();
+  const { carts, setCarts } = useCartsStore();
   const router = useRouter();
-  console.log(user);
   const handleLogout = () => {
-    logout();
     setIsModalOpen(false);
+    setProfileModal(false);
+    setCarts([]);
+    logout();
     router.push("/");
   };
   // const handleAuthAction = () => {
@@ -55,10 +56,12 @@ export default function Header() {
           </div>
 
           <div className="flex flex-row items-center gap-6">
-            <div className="flex items-center justify-center p-2 border border-white rounded-md bg-white/75">
-              <FontAwesomeIcon icon={faCartShopping} />
-              <h1 className="ml-2">Carts ({carts.length})</h1>
-            </div>
+            {isAuthenticated && (
+              <div className="flex items-center justify-center p-2 border border-white rounded-md bg-white/75">
+                <FontAwesomeIcon icon={faCartShopping} />
+                <h1 className="ml-2">Carts ({carts.length})</h1>
+              </div>
+            )}
             <div>
               <button
                 type="button"
@@ -164,16 +167,17 @@ export default function Header() {
                   Activity
                 </Link>
               </li>
-
-              <li>
-                <Link
-                  href="/cart"
-                  className="inline-flex items-center gap-2 p-2 rounded-md hover:text-white hover:bg-primary-100"
-                >
-                  <FontAwesomeIcon className="mr-2" icon={faCartShopping} />
-                  Cart ({carts.length})
-                </Link>
-              </li>
+              {isAuthenticated && (
+                <li>
+                  <Link
+                    href="/user/cart"
+                    className="inline-flex items-center gap-2 p-2 rounded-md hover:text-white hover:bg-primary-100"
+                  >
+                    <FontAwesomeIcon className="mr-2" icon={faCartShopping} />
+                    Cart ({carts.length})
+                  </Link>
+                </li>
+              )}
 
               {user && isAuthenticated ? (
                 <li>

@@ -1,36 +1,99 @@
 import { create } from "zustand";
 import { Activities } from "./activitiesStore";
 
-export interface Cart{
-    id:string;
-    UserId:string;
-    activityId:string;
-    quantity:number;
-    createdAt:string;
-    updatedAt:string;
-    activity: Activities;
+export interface Cart {
+  id: string;
+  userId: string;
+  activityId: string;
+  quantity: number;
+  createdAt: string;
+  updatedAt: string;
+  activity: Activities;
 }
 
 interface CartsState {
-    carts: Cart[];
-    setCarts: (carts: Cart[]) => void;
-    addCart: (item: Cart) => void;
-    removeCart: (cartItemId: string) => void;
-    clearCart: () => void;
+  carts: Cart[];
+  selectedItems: string[];
+  itemCart: number;
+  addCart: (item: Cart) => void;
+  setCarts: (items: Cart[]) => void;
+  addQuantity: (activityId: string) => void;
+  removeQuantity: (activityId: string) => void;
+  removeCart: (activityId: string) => void;
+  clearCart: () => void;
+  addItemCart: (item: number) => void;
+  toggleSelectItem: (activityId: string) => void; // Fungsi untuk toggle item yang dipilih
+  getSelectedItems: () => Cart[]; // Fungsi untuk mendapatkan item yang dipilih
 }
 
-export const useCartsStore = create<CartsState>((set) => ({
-    carts: [],
-    
-    setCarts: (carts) => set({ carts }),
-    
-    addCart: (item) =>
-        set((state) => ({ carts: [...state.carts, item] })),
-    
-    removeCart: (cartItemId) =>
-        set((state) => ({
-            carts: state.carts.filter((item) => item.id !== cartItemId),
-        })),
-    
-    clearCart: () => set({ carts: [] }),
+export const useCartsStore = create<CartsState>((set, get) => ({
+  carts: [],
+  selectedItems: [],
+  itemCart: 0,
+  addItemCart(item: number) {
+    set({ itemCart: get().itemCart + item });
+  },
+  addCart: (item) =>
+    set((state) => {
+      const existingCartItem = state.carts.find(
+        (cart) => cart.activityId === item.activityId
+      );
+      if (existingCartItem) {
+        return {
+          carts: state.carts.map((cart) =>
+            cart.activityId === item.activityId
+              ? { ...cart, quantity: cart.quantity + item.quantity }
+              : cart
+          ),
+        };
+      } else {
+        // Jika item belum ada, tambahkan item baru
+        return { carts: [...state.carts, item] };
+      }
+    }),
+
+  setCarts(items) {
+    set({ carts: items });
+  },
+  toggleSelectItem: (activityId) =>
+    set((state) => {
+      const isSelected = state.selectedItems.includes(activityId);
+      return {
+        selectedItems: isSelected
+          ? state.selectedItems.filter((id) => id !== activityId) // Hapus dari selectedItems jika sudah ada
+          : [...state.selectedItems, activityId], // Tambahkan ke selectedItems jika belum ada
+      };
+    }),
+
+  getSelectedItems: () => {
+    const state = get();
+    return state.carts.filter((cart) =>
+      state.selectedItems.includes(cart.activityId)
+    );
+  },
+
+  removeCart: (activityId) =>
+    set((state) => ({
+      carts: state.carts.filter((item) => item.activityId !== activityId),
+    })),
+
+  addQuantity: (activityId) =>
+    set((state) => ({
+      carts: state.carts.map((item) =>
+        item.activityId === activityId
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      ),
+    })),
+
+  removeQuantity: (activityId) =>
+    set((state) => ({
+      carts: state.carts.map((item) =>
+        item.activityId === activityId
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      ),
+    })),
+
+  clearCart: () => set({ carts: [] }),
 }));
