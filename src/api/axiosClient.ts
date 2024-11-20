@@ -1,10 +1,10 @@
 import axios from "axios";
-import  Cookies from "js-cookie";
+import Cookies from "js-cookie";
 const axiosClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,  // Pastikan API URL ada di .env.local
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Pastikan API URL ada di .env.local
   headers: {
     "Content-Type": "application/json",
-    "apiKey": process.env.NEXT_PUBLIC_API_KEY,
+    apiKey: process.env.MY_SECRET_API_KEY,
   },
 });
 
