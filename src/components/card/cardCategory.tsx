@@ -5,7 +5,7 @@ export default function CardCategory(props: {
   imageUrl: string;
 }) {
   return (
-    <div className="mt-3 rounded-lg bg-primary-300 relative">
+    <div className="mt-1 rounded-lg bg-primary-300 relative">
       <Image
         width={1000}
         height={1000}

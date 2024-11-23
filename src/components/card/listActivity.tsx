@@ -114,7 +114,7 @@ const ActivityCard = ({
         </div>
 
         <h1 className="font-bold">{title}</h1>
-        <p className="text-sm">{description}</p>
+        <p className="text-sm overflow-hidden">{description}</p>
       </div>
       <div className="flex items-center md:gap-6 md:flex-col md:justify-center justify-between px-2 md:w-2/3 ">
         <div className="flex flex-col md:flex-row gap-2">

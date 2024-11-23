@@ -10,7 +10,9 @@ const endpoints = {
   users: "/all-user",
   updateUser: "/update-profile",
   updateRole: `/update-user-role/`,
-  banner: "/banner",
+  // Bannar
+  banner: "/banners",
+
   promo: "/promos",
   category: `${BASE_URL}/categories`,
   activity: "/activities",
@@ -24,6 +26,8 @@ const endpoints = {
   // Payment
   paymentMethod: "/payment-method",
   transaction: "/transaction",
+
+  uploadImage: "/upload-image",
 };
 
 export default endpoints;

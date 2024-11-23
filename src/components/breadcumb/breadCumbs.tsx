@@ -1,4 +1,14 @@
-export const BreadCumbs = () => {
+import Link from "next/link";
+
+export const BreadCumbs = ({
+  title,
+  prevPage,
+  to,
+}: {
+  title: string;
+  prevPage: string;
+  to: string;
+}) => {
   return (
     <nav aria-label="Breadcrumb">
       <ol className="flex items-center gap-1 text-sm text-gray-600">
@@ -39,10 +49,10 @@ export const BreadCumbs = () => {
         </li>
 
         <li>
-          <a href="#" className="block transition hover:text-gray-700">
+          <Link href={to} className="block transition hover:text-gray-700">
             {" "}
-            Shirts{" "}
-          </a>
+            {prevPage}{" "}
+          </Link>
         </li>
 
         <li className="rtl:rotate-180">
@@ -63,7 +73,7 @@ export const BreadCumbs = () => {
         <li>
           <a href="#" className="block transition hover:text-gray-700">
             {" "}
-            Plain Tee{" "}
+            {title}{" "}
           </a>
         </li>
       </ol>

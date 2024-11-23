@@ -1,4 +1,5 @@
 import endpoints from "@/api/endpoints";
+import { useFetchBanner } from "@/api/hooks/Banner/useFetchBanner";
 import { useFetchPromo } from "@/api/hooks/Promo/useFetchPromo";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,32 +14,8 @@ export const PromoBanner = () => {
     slidesToScroll: 1,
   };
   const { data: promos, isLoading } = useFetchPromo(endpoints.promo);
-  const banners = [
-    {
-      id: "cdbcb029-5ca3-44f7-83f3-852cbeeba838",
-      name: "Disney",
-      imageUrl:
-        "https://travel-journal-api-bootcamp.do.dibimbing.id/images/1730792183140-disneey.jpg",
-      createdAt: "2024-11-04T13:24:14.593Z",
-      updatedAt: "2024-11-10T03:54:05.530Z",
-    },
-    {
-      id: "9b93043d-34fb-481c-bd18-5a4dec44df3c",
-      name: "Australia",
-      imageUrl:
-        "https://travel-journal-api-bootcamp.do.dibimbing.id/images/1731498367395-191011110307-02-australia-beautiful-places.jpg",
-      createdAt: "2024-11-13T11:46:07.532Z",
-      updatedAt: "2024-11-13T11:46:07.532Z",
-    },
-    {
-      id: "803ad66c-1641-49bf-a5bd-970140bc1683",
-      name: "Banner edit",
-      imageUrl:
-        "https://www.ancol.com/shared/file-manager/Unit%20Informasi/DUFAN/WAHANA-DUFAN---ICE-AGE.jpg",
-      createdAt: "2024-11-10T03:08:20.874Z",
-      updatedAt: "2024-11-13T15:26:20.279Z",
-    },
-  ];
+  const { data: banners } = useFetchBanner(endpoints.banner);
+
   return (
     <section
       className="container py-5 mx-auto bg-gradient-to-b from-gray-100 to-white"
@@ -50,7 +27,7 @@ export const PromoBanner = () => {
       </h1>
       <div className="container px-10 mx-auto">
         <Slider {...settings}>
-          {banners.map((banner, index) => (
+          {banners?.data?.map((banner, index) => (
             <div
               key={index}
               className="relative flex items-center justify-center h-64 gap-10"
@@ -58,7 +35,7 @@ export const PromoBanner = () => {
               <Image
                 width={1000}
                 height={1000}
-                src={banner.imageUrl}
+                src={banner.imageUrl || "/img/noimage.webp"}
                 alt={banner.name}
                 className="object-cover w-full h-full rounded-lg shadow-md"
               />

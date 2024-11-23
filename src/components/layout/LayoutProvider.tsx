@@ -47,12 +47,12 @@ export default function LayoutProvider({
     checkAuthentication();
 
     // Optional: Tambahkan event listener untuk storage changes
-    // window.addEventListener('storage', checkAuthentication)
+    window.addEventListener("storage", checkAuthentication);
 
-    // // Cleanup listener
-    // return () => {
-    //   window.removeEventListener('storage', checkAuthentication)
-    // }
+    // Cleanup listener
+    return () => {
+      window.removeEventListener("storage", checkAuthentication);
+    };
   }, [login, logout, setCarts, itemCart, isAuthenticated]);
 
   if (isLoading) {

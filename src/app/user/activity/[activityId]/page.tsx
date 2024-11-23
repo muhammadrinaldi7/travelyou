@@ -1,6 +1,7 @@
 "use client";
 import endpoints from "@/api/endpoints";
 import { useFetchActivityById } from "@/api/hooks/Activity/useFetchActivity";
+import { BreadCumbs } from "@/components/breadcumb/breadCumbs";
 import ImageSlider from "@/components/card/imageSlider";
 import { useParams } from "next/navigation";
 export default function ActivityDetailPage() {
@@ -13,6 +14,13 @@ export default function ActivityDetailPage() {
   return (
     <>
       <div className="container mx-auto py-20 px-5">
+        <div className="my-4">
+          <BreadCumbs
+            title={`Detail ${activity?.data?.title}`}
+            prevPage="Activity"
+            to="/user/activity"
+          />
+        </div>
         {activity?.data && (
           <div className="flex flex-col md:flex-row gap-5">
             <div className="w-full md:w-1/2">

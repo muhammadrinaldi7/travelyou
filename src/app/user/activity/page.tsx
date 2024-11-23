@@ -6,8 +6,9 @@ import {
 } from "@/api/hooks/Activity/useFetchActivity";
 import CardCategory from "@/components/card/cardCategory";
 import ActivityCard from "@/components/card/listActivity";
+import { ColourPagination } from "@/components/pagination/pagination";
 import Spinner from "@/components/spinner/Spinner";
-import { faFilter, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { useState } from "react";
@@ -29,6 +30,7 @@ export default function ActivityPage() {
       kategori: category,
     });
   };
+
   const activityFiltered = activity?.data?.filter((activity) => {
     const isCityMatch = activity.city
       .toLowerCase()
@@ -48,6 +50,20 @@ export default function ActivityPage() {
       isCityMatch && priceMin && priceMax && isRatingMatch && isCategoryMatch
     );
   });
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4;
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  const currentItems = activityFiltered?.slice(
+    indexOfFirstItem,
+    indexOfLastItem
+  );
+  const totalPages = activityFiltered
+    ? Math.ceil(activityFiltered.length / itemsPerPage)
+    : 0;
+  // console.log(totalPages);
   return (
     <>
       <div className="flex flex-col w-full bg-white">
@@ -55,14 +71,11 @@ export default function ActivityPage() {
           className="relative flex justify-center h-64 mx-1 bg-center bg-cover rounded-b-2xl"
           style={{ backgroundImage: "url('/img/blue-sea.webp')" }}
         >
-          <div className="w-[80%] drop-shadow-xl shadow-lg h-60 container flex flex-col mx-auto mt-28 rounded-xl items-center p-6 bg-gray-100/95">
+          <div className="w-[80%] drop-shadow-xl shadow-lg h-72 container flex flex-col mx-auto mt-28 rounded-xl items-center p-6 bg-gray-100/95">
             <div className="flex items-center justify-center w-full">
               <h1 className="self-center text-xl font-travelyouu text-primary-300">
                 TravelYouuu
               </h1>
-              <button className="absolute self-center px-3 py-2 text-sm border end-6 text-primary-200 border-primary-200 bg-primary-300/25 hover:bg-white/50 rounded-2xl">
-                <FontAwesomeIcon icon={faFilter} /> <span>Filter</span>
-              </button>
             </div>
             <div className="relative w-full mt-8">
               <span className="absolute inset-y-0 grid px-4 end-0 place-content-center">
@@ -81,15 +94,13 @@ export default function ActivityPage() {
                 className="self-center w-full text-gray-600 rounded-full focus:border-primary-300"
               />
             </div>
-            <div className="flex items-center gap-3 overflow-x-auto max-h-fit justify-left w-full">
+            <h1>Kategori</h1>
+            <div className="flex items-center gap-3 overflow-x-auto h-full justify-left w-full">
               <div
-                onClick={() => handleCategoryClick("")} // Set kategori ke "" untuk menampilkan semua aktivitas
+                onClick={() => handleCategoryClick("")}
                 className="cursor-pointer"
               >
-                <CardCategory
-                  name="All"
-                  imageUrl="/img/hero.webp" // Ganti dengan URL gambar default jika diperlukan
-                />
+                <CardCategory name="All" imageUrl="/img/hero.webp" />
               </div>
               {category?.data.map((category) => (
                 <div
@@ -103,7 +114,6 @@ export default function ActivityPage() {
                   />
                 </div>
               ))}
-              {/* <CardCategory name="Paris" imageUrl="/img/hero.webp" /> */}
             </div>
           </div>
         </div>
@@ -157,10 +167,10 @@ export default function ActivityPage() {
                   </h1>
                 )}
                 {isLoading && <Spinner />}
-                {activityFiltered?.map((activity, index) => (
+                {currentItems?.map((activity, index) => (
                   <ActivityCard
                     key={index}
-                    imageUrl={activity.imageUrls[0] || "/img/hero.webp"}
+                    imageUrl={activity.imageUrls[0] || "/img/noimage.webp"}
                     title={activity.title}
                     description={activity.description}
                     price={activity.price.toLocaleString()}
@@ -172,6 +182,13 @@ export default function ActivityPage() {
                     total_reviews={activity.total_reviews}
                   />
                 ))}
+                <div>
+                  <ColourPagination
+                    page={currentPage}
+                    totalPage={totalPages}
+                    handlePageChange={(prev: number) => setCurrentPage(prev)}
+                  />
+                </div>
               </div>
             </div>
           </div>

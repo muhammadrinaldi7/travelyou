@@ -20,14 +20,14 @@ const CartPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col py-10 px-5 items-center justify-center">
-      <div className="self-start">
-        <BreadCumbs />
+    <div className="min-h-screen bg-gray-100 flex flex-col py-20 px-5 items-center justify-center">
+      <div className="self-start ml-2">
+        <BreadCumbs title="Cart" prevPage="Home" to="/" />
       </div>
       <h1 className="text-3xl self-start ml-6 mb-3 font-bold">Cart Page</h1>
-      <div className="flex w-full flex-col md:flex-row">
+      <div className="flex w-full flex-col gap-4 md:flex-row">
         <Cart />
-        <div className="flex bg-white w-1/4 h-fit rounded-lg shadow-md p-6 flex-col">
+        <div className="flex bg-white md:w-2/4 h-fit rounded-lg shadow-md p-6 flex-col">
           <h2 className="text-lg text-nowrap font-bold mb-4">Transaction</h2>
           <div className="flex border border-black rounded-xl p-2 flex-col space-y-4">
             {selectedItems.length > 0 ? (

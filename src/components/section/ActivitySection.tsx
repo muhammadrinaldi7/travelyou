@@ -40,7 +40,7 @@ const ActivitySection: React.FC = () => {
           >
             <div className="relative w-full h-56">
               <Image
-                src={activity.imageUrls[0] || "/img/favicon.ico"}
+                src={activity.imageUrls[0] || "/img/noimage.webp"}
                 alt={activity.title}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-110"
