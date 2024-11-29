@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,36 +14,23 @@ import {
   faMap,
   faPhone,
 } from "@fortawesome/free-solid-svg-icons";
-
+import { useFetchPaymentMethod } from "@/api/hooks/Payment/useFetchPaymenMethod";
+import endpoints from "@/api/endpoints";
+import { usePaymentStore } from "@/stores/paymentStore";
 // Logo Bank
-const bankLogos = [
-  {
-    id: "4c0108a5-5ba9-4ee2-b688-7fbfbdab2576",
-    name: "BCA",
-    imageUrl:
-      "https://dibimbing-cdn.sgp1.cdn.digitaloceanspaces.com/bca-logo.svg",
-  },
-  {
-    id: "3d772d88-6e2c-4c7e-ba3e-79cb3ea84503",
-    name: "Bank BRI",
-    imageUrl:
-      "https://dibimbing-cdn.sgp1.cdn.digitaloceanspaces.com/bri-logo.svg",
-  },
-  {
-    id: "e22b39c0-177b-4337-9b31-ae41a69aac95",
-    name: "Bank Mandiri",
-    imageUrl:
-      "https://dibimbing-cdn.sgp1.cdn.digitaloceanspaces.com/mandiri-logo.svg",
-  },
-  {
-    id: "60a4c099-4134-4115-b1c0-a7b989d6f9dc",
-    name: "Bank BNI",
-    imageUrl:
-      "https://dibimbing-cdn.sgp1.cdn.digitaloceanspaces.com/bni-logo.svg",
-  },
-];
 
 const Footer = () => {
+  const { data: paymentMethodBanks } = useFetchPaymentMethod(
+    endpoints.paymentMethod
+  );
+  const { setPaymentMethodBanks, paymentMethodBanks: dataPayment } =
+    usePaymentStore();
+  useEffect(() => {
+    if (paymentMethodBanks) {
+      setPaymentMethodBanks(paymentMethodBanks.data);
+    }
+  }, [paymentMethodBanks, setPaymentMethodBanks]);
+  // console.log(dataPayment);
   return (
     <footer className="container mx-auto text-white bg-primary-300">
       <div className="px-5 pt-16 pb-8 ">
@@ -102,17 +90,17 @@ const Footer = () => {
           <div>
             <h4 className="mb-4 font-bold">Metode Pembayaran</h4>
             <div className="grid grid-cols-3 gap-4">
-              {bankLogos.map((bank, index) => (
+              {dataPayment?.map((bank, index) => (
                 <div
                   key={index}
-                  className="flex items-center justify-center p-2 rounded-lg bg-white/10"
+                  className="flex items-center justify-center p-2 drop-shadow-md rounded-lg bg-white/90"
                 >
                   <Image
                     src={bank.imageUrl || "/img/noimage.webp"}
                     alt={bank.name}
-                    width={60}
-                    height={30}
-                    className="transition-all w-16 h-8 grayscale hover:grayscale-0"
+                    width={1000}
+                    height={1000}
+                    className="transition-all w-16 h-8 drop-shadow-lg grayscale hover:grayscale-0"
                   />
                 </div>
               ))}

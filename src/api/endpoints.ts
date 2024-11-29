@@ -23,9 +23,13 @@ const endpoints = {
   addCart: "/add-cart",
   deleteCart: "/delete-cart/",
 
+  // Transaction
+  MyTransaction: "/my-transactions",
+  createTransaction: "/create-transaction",
+  updateTransactionProof: "/update-transaction-proof-payment/",
+
   // Payment
-  paymentMethod: "/payment-method",
-  transaction: "/transaction",
+  paymentMethod: "/payment-methods",
 
   uploadImage: "/upload-image",
 };

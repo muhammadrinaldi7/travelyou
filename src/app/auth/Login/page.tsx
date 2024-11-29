@@ -32,7 +32,7 @@ const LoginPage = () => {
       },
       (error) => {
         const errorRes = error as { response: { data: { message: string } } };
-        toast(errorRes.response.data.message);
+        toast.error(errorRes.response.data.message);
       }
     );
   };

@@ -64,6 +64,7 @@ export const PromoBanner = () => {
             promos?.data?.slice(0, 3).map((promo) => (
               <li
                 key={promo.id}
+                data-aos="zoom-out"
                 className="overflow-auto transition rounded-lg shadow hover:shadow-primary-300 hover:shadow-lg"
               >
                 <Image

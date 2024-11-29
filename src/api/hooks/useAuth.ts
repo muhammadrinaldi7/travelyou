@@ -7,7 +7,7 @@ interface LoginPayload {
   password: string;
 }
 
-interface RegisterPayload {
+export interface RegisterPayload {
   name: string;
   email: string;
   password: string;
@@ -64,12 +64,14 @@ export default function useAuth(baseUrl: string) {
       });
     },
 
-    register: (payload: RegisterPayload, onSuccess?: CallbackType) => {
+    register: (
+      payload: RegisterPayload,
+      onSuccess?: CallbackType,
+      onError?: CallbackType
+    ) => {
       register(payload, {
         onSuccess,
-        onError: (error) => {
-          console.error("Registration failed:", error);
-        },
+        onError,
       });
     },
 

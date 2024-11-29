@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { useCartsStore } from "@/stores/cartsStore";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import usePostCart from "@/api/hooks/Cart/usePostCart";
 import endpoints from "@/api/endpoints";
+import { useTransactionStore } from "@/stores/transactionStore";
 
 const CartItem = ({
   id,
@@ -23,11 +24,20 @@ const CartItem = ({
 }) => {
   const { removeCart, addQuantity, removeQuantity, toggleSelectItem } =
     useCartsStore();
-  const [isChecked, setIsChecked] = useState(false); // State untuk checkbox
+  const { setTransactionItemsPayload, transactionItemsPayload } =
+    useTransactionStore();
+  // const [isChecked, setIsChecked] = useState(false); // State untuk checkbox
   const { updateCart } = usePostCart(endpoints.cartUpdate + id);
 
   const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
+    // setIsChecked(!isChecked);
+    setTransactionItemsPayload({
+      ...transactionItemsPayload,
+      cartIds: transactionItemsPayload.cartIds.includes(id)
+        ? transactionItemsPayload.cartIds.filter((idCart) => idCart !== id)
+        : [...transactionItemsPayload.cartIds, id],
+    });
+
     toggleSelectItem(activityId);
   };
 
@@ -48,9 +58,14 @@ const CartItem = ({
       <div className="flex items-center space-x-4">
         <input
           type="checkbox"
-          checked={isChecked}
+          // checked={isChecked}
+          checked={
+            useCartsStore((state) => state.selectedItems.includes(activityId))
+              ? true
+              : false
+          }
           onChange={handleCheckboxChange}
-          className="h-5 w-5"
+          className="h-5 w-5 checked:bg-primary-300"
         />
         <Image
           src={imageUrl || "/img/favicon.ico"}
@@ -61,8 +76,10 @@ const CartItem = ({
         />
         <div>
           <h3 className="text-lg font-semibold">{title}</h3>
-          <p className="text-gray-600">Quantity: {quantity}</p>
-          <p className="text-gray-600">Price: {price.toLocaleString()}</p>
+          {/* <p className="text-gray-600">Quantity: {quantity}</p> */}
+          <p className="text-gray-600 font-bold">
+            Rp. {price.toLocaleString("id-ID")}
+          </p>
         </div>
       </div>
       <div className="flex items-center space-x-4">
@@ -71,11 +88,13 @@ const CartItem = ({
           Quantity{" "}
         </label>
 
-        <div className="flex items-center rounded border border-gray-200">
+        <div className="flex items-center rounded-xl border border-gray-200">
           <button
             onClick={handleRemoveQuantity}
             type="button"
-            className="size-10 leading-10 text-gray-600 transition hover:opacity-75"
+            className={`size-10 leading-10 ${
+              quantity === 1 && "opacity-50 pointer-events-none"
+            } text-red-600 transition hover:opacity-75`}
           >
             <FontAwesomeIcon icon={faMinus} />
           </button>
@@ -91,7 +110,7 @@ const CartItem = ({
           <button
             type="button"
             onClick={handleAddQuantity}
-            className="size-10 leading-10 text-gray-600 transition hover:opacity-75"
+            className="size-10 leading-10 text-green-600 transition hover:opacity-75"
           >
             <FontAwesomeIcon icon={faPlus} />
           </button>

@@ -1,5 +1,6 @@
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 
 export const ProfileModal = (props: { class: string; onOpen: () => void }) => {
   return (
@@ -18,13 +19,13 @@ export const ProfileModal = (props: { class: string; onOpen: () => void }) => {
               My profile
             </a>
 
-            <a
-              href="#"
+            <Link
+              href="/user/transaction"
               className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-primary-300/65 hover:text-gray-700"
               role="menuitem"
             >
-              Billing summary
-            </a>
+              My Transaction
+            </Link>
 
             <a
               href="#"

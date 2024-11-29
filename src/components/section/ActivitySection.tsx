@@ -36,6 +36,7 @@ const ActivitySection: React.FC = () => {
         {filteredActivities?.slice(0, 4).map((activity) => (
           <div
             key={activity.id}
+            data-aos="zoom-in"
             className="overflow-hidden transition-all duration-300 bg-white shadow-lg rounded-2xl hover:shadow-xl hover:-translate-y-2 group"
           >
             <div className="relative w-full h-56">

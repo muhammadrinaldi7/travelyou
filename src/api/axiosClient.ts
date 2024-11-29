@@ -1,19 +1,17 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 const apiKey = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
-console.log(apiKey);
+// console.log(apiKey);
 const axiosClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL, // Pastikan API URL ada di .env.local
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
     apiKey: apiKey,
   },
 });
 
-// Request Interceptor
 axiosClient.interceptors.request.use(
   (config) => {
-    // Tambah token jika ada, misalnya untuk authentication
     const token = Cookies.get("token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
@@ -23,13 +21,10 @@ axiosClient.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// Response Interceptor
 axiosClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Handling error seperti 401 Unauthorized atau 500 Server Error
     if (error.response && error.response.status === 401) {
-      // Misalnya, redirect ke halaman login
     }
     return Promise.reject(error);
   }

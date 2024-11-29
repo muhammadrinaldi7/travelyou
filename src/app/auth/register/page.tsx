@@ -5,6 +5,7 @@ import Image from "next/image";
 import useAuth from "@/api/hooks/useAuth";
 import endpoints from "@/api/endpoints";
 import toast from "react-hot-toast";
+import { Response } from "@/api/hooks/Promo/useFetchPromo";
 
 interface RegisterPageProps {
   name: string;
@@ -35,10 +36,20 @@ export default function RegisterPage() {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    register(formData, (data) => {
-      toast.success("Registration successful!");
-      console.log("Registration successful!", data);
-    });
+    register(
+      formData,
+      (data) => {
+        const res = data as Response<RegisterPageProps>;
+        toast.success(res.data.name + " registered successfully!");
+        // console.log("Registration successful!", data);
+      },
+      (error) => {
+        const errorRes = error as { response: { data: { message: string } } };
+        //  toast(errorRes.response.data.message);
+        // console.log("ini error", errorRes.response.data.message);
+        toast.error(errorRes.response.data.message);
+      }
+    );
   };
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];

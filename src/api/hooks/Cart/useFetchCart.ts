@@ -3,7 +3,7 @@ import { Response } from "../Promo/useFetchPromo";
 import { useQuery } from "@tanstack/react-query";
 import axiosClient from "@/api/axiosClient";
 
-export const useFetchCart = (url: string) => {
+const useFetchCart = (url: string) => {
   return useQuery<Response<Cart[]>, Error>({
     queryKey: ["fetchCart", url],
     queryFn: async () => {
@@ -12,3 +12,5 @@ export const useFetchCart = (url: string) => {
     },
   });
 };
+
+export { useFetchCart };

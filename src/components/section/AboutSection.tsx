@@ -15,7 +15,10 @@ const AboutSection = () => {
       >
         <div className="absolute inset-0 bg-cover md:bg-contain opacity-50 lg:scale-150 bg-center z-[1] bg-no-repeat"></div>
         <div className="container relative z-20 px-10 py-16 mx-auto">
-          <div className="flex flex-col items-center justify-center gap-10 px-6 py-10 rounded-lg md:flex-row bg-primary-300/75">
+          <div
+            data-aos="fade-up"
+            className="flex flex-col items-center justify-center gap-10 px-6 py-10 rounded-lg md:flex-row bg-primary-300/75"
+          >
             <div className="w-full p-3">
               <h1 className="text-3xl font-normal text-accent-100 font-bigtittle">
                 Discover the World of Art and Culture with{" "}
@@ -47,7 +50,10 @@ const AboutSection = () => {
             </div>
             <div className="relative flex justify-center w-full p-3">
               <>
-                <div className="absolute top-0 left-0 transform -translate-x-2 translate-y-10 md:hover:scale-110 drop-shadow-lg hover:z-30">
+                <div
+                  data-aos="flip-down"
+                  className="absolute top-0 left-0 transform -translate-x-2 translate-y-10 md:hover:scale-110 drop-shadow-lg hover:z-30"
+                >
                   <Image
                     src={`/img/hero.webp`}
                     alt="Cultural Landscape 3"
@@ -56,7 +62,10 @@ const AboutSection = () => {
                     className="border-4 border-white rounded-lg shadow-lg"
                   />
                 </div>
-                <div className="absolute top-0 right-0 transform translate-x-2 -translate-y-8 md:hover:scale-110 drop-shadow-lg hover:z-30">
+                <div
+                  data-aos="flip-down"
+                  className="absolute top-0 right-0 transform translate-x-2 -translate-y-8 md:hover:scale-110 drop-shadow-lg hover:z-30"
+                >
                   <Image
                     src={`/img/hero.webp`}
                     alt="Cultural Landscape 3"
@@ -65,7 +74,10 @@ const AboutSection = () => {
                     className="border-4 border-white rounded-lg shadow-lg"
                   />
                 </div>
-                <div className="relative z-10 drop-shadow-lg md:hover:scale-110">
+                <div
+                  data-aos="flip-up"
+                  className="relative z-10 drop-shadow-lg md:hover:scale-110"
+                >
                   <Image
                     src={`/img/hero.webp`}
                     alt="Cultural Landscape 3"

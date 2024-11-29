@@ -27,6 +27,7 @@ export default function Header() {
     logout();
     router.push("/");
   };
+  console.log(user?.name);
   // const handleAuthAction = () => {
   //   if (isAuthenticated) {
   //     // Logout
@@ -57,10 +58,13 @@ export default function Header() {
 
           <div className="flex flex-row items-center gap-6">
             {isAuthenticated && (
-              <div className="flex items-center justify-center p-2 border border-white rounded-md bg-white/75">
+              <Link
+                href="/user/cart"
+                className="flex items-center justify-center p-2 border border-white rounded-md bg-white/75"
+              >
                 <FontAwesomeIcon icon={faCartShopping} />
                 <h1 className="ml-2">Carts ({carts.length})</h1>
-              </div>
+              </Link>
             )}
             <div>
               <button
@@ -88,21 +92,21 @@ export default function Header() {
                       alt="Profile Picture"
                       src={user.profilePictureUrl}
                     />
-                    <h1>{user.name.split(" ")[1]}</h1>
+                    <h1>{user.name.split(" ")[0]}</h1>
                   </div>
                 )}
                 <ul className="flex flex-col gap-2 px-6">
                   <li>
-                    <Link href="#home"> Home </Link>
+                    <Link href="/#hero"> Home </Link>
                   </li>
                   <li>
-                    <Link href="#about"> About </Link>
+                    <Link href="/#about"> About </Link>
                   </li>
                   <li>
-                    <Link href="#activity"> Activity </Link>
+                    <Link href="/#activity"> Activity </Link>
                   </li>
                   <li>
-                    <Link href="#promo"> Promo </Link>
+                    <Link href="/#promo"> Promo </Link>
                   </li>
                   {isAuthenticated && user ? (
                     <li>
@@ -161,7 +165,7 @@ export default function Header() {
             <ul className="flex flex-row justify-center gap-8 font-thin text-black/85 ">
               <li>
                 <Link
-                  href={"/#activity"}
+                  href={isAuthenticated ? "/user/activity" : "/#activity"}
                   className="inline-flex items-center gap-2 p-2 rounded-md hover:text-white hover:bg-primary-100"
                 >
                   Activity

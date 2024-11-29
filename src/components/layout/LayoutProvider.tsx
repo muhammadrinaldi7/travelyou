@@ -5,6 +5,8 @@ import { Response } from "@/api/hooks/Promo/useFetchPromo";
 import { useAuthStore } from "@/stores/authStore";
 import { Cart, useCartsStore } from "@/stores/cartsStore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Aos from "aos";
+import "aos/dist/aos.css";
 import { useEffect, useState } from "react";
 
 const queryClient = new QueryClient();
@@ -16,6 +18,7 @@ export default function LayoutProvider({
   const [isLoading, setIsLoading] = useState(true);
   const { login, logout, isAuthenticated } = useAuthStore();
   const { setCarts, itemCart } = useCartsStore();
+
   useEffect(() => {
     // Fungsi untuk memeriksa session
     const checkAuthentication = async () => {
@@ -54,7 +57,13 @@ export default function LayoutProvider({
       window.removeEventListener("storage", checkAuthentication);
     };
   }, [login, logout, setCarts, itemCart, isAuthenticated]);
-
+  useEffect(() => {
+    Aos.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: false,
+    });
+  }, []);
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
