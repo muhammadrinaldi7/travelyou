@@ -12,7 +12,11 @@ const endpoints = {
   updateRole: `/update-user-role/`,
   // Bannar
   banner: "/banners",
+  addBanner: "/create-banner",
+  deleteBanner: "/delete-banner",
+  updateBanner: "/update-banner/",
 
+  // Promo
   promo: "/promos",
   category: `${BASE_URL}/categories`,
   activity: "/activities",

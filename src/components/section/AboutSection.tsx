@@ -1,12 +1,9 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { useActivitiesStore } from "@/stores/activitiesStore";
 
 // src/components/LandingPage/PromoSection.tsx
 const AboutSection = () => {
-  const { activities } = useActivitiesStore();
-  console.log(activities);
   return (
     <>
       <section

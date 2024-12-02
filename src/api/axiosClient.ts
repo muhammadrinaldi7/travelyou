@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-const apiKey = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
+export const apiKey = "24405e01-fbc1-45a5-9f5a-be13afcd757c";
 // console.log(apiKey);
 const axiosClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,

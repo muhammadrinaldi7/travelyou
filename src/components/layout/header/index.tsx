@@ -6,19 +6,25 @@ import { useAuthStore } from "@/stores/authStore";
 import { useCartsStore } from "@/stores/cartsStore";
 import { useHeaderStore } from "@/stores/headerStore";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { faBars, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faCartShopping,
+  faDashboard,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-// import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 export default function Header() {
-  const { toggleOpen, open } = useHeaderStore();
+  const { toggleOpen, open, sidebarDashboard, toggleSidebarDashboard } =
+    useHeaderStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileModal, setProfileModal] = useState(false);
   const { user, isAuthenticated, logout } = useAuthStore();
   const { carts, setCarts } = useCartsStore();
+
   const router = useRouter();
   const handleLogout = () => {
     setIsModalOpen(false);
@@ -27,17 +33,15 @@ export default function Header() {
     logout();
     router.push("/");
   };
-  console.log(user?.name);
-  // const handleAuthAction = () => {
-  //   if (isAuthenticated) {
-  //     // Logout
-  //     logout()
-  //     router.push('/login')
-  //   } else {
-  //     // Redirect ke login
-  //     router.push('/login')
-  //   }
-  // }
+  const handleDashboard = () => {
+    if (!sidebarDashboard) {
+      toggleSidebarDashboard(true);
+      router.push("/admin");
+    } else {
+      toggleSidebarDashboard(false);
+      router.push("/");
+    }
+  };
   return (
     <header className="container absolute mx-auto bg-transparent">
       <LogoutModal
@@ -47,17 +51,9 @@ export default function Header() {
       />
       <div className="w-full">
         {/* NavMobile */}
-        <div className="fixed z-30 flex items-center justify-between w-full h-16 px-6 mt-2 bg-transparent top-2 md:hidden">
-          <div>
-            <a href="#home">
-              <h1 className="text-2xl font-bold font-travelyouu font-logo text-primary-300 ">
-                TravelYouuu
-              </h1>
-            </a>
-          </div>
-
+        <div className="fixed z-30 flex items-center justify-end w-full h-16 px-6 mt-2 bg-transparent top-2 md:hidden">
           <div className="flex flex-row items-center gap-6">
-            {isAuthenticated && (
+            {isAuthenticated && user?.role === "user" ? (
               <Link
                 href="/user/cart"
                 className="flex items-center justify-center p-2 border border-white rounded-md bg-white/75"
@@ -65,7 +61,18 @@ export default function Header() {
                 <FontAwesomeIcon icon={faCartShopping} />
                 <h1 className="ml-2">Carts ({carts.length})</h1>
               </Link>
-            )}
+            ) : isAuthenticated && user?.role === "admin" ? (
+              <button
+                onClick={handleDashboard}
+                className={`flex items-center ${
+                  sidebarDashboard ? "bg-primary-300/75" : "bg-white/75"
+                } justify-center p-2 border border-white rounded-md `}
+              >
+                <FontAwesomeIcon icon={faDashboard} />
+                <h1 className="ml-2">Dashboard</h1>
+              </button>
+            ) : null}
+
             <div>
               <button
                 type="button"
@@ -103,7 +110,11 @@ export default function Header() {
                     <Link href="/#about"> About </Link>
                   </li>
                   <li>
-                    <Link href="/#activity"> Activity </Link>
+                    {isAuthenticated ? (
+                      <Link href="/user/activity"> Activity </Link>
+                    ) : (
+                      <Link href="/#activity"> Activity </Link>
+                    )}
                   </li>
                   <li>
                     <Link href="/#promo"> Promo </Link>
@@ -119,7 +130,7 @@ export default function Header() {
                     </li>
                   ) : (
                     <li>
-                      <Link href={"/auth/login"} className="text-green-400">
+                      <Link href={"/auth/Login"} className="text-green-400">
                         Log In
                       </Link>
                     </li>
@@ -171,7 +182,7 @@ export default function Header() {
                   Activity
                 </Link>
               </li>
-              {isAuthenticated && (
+              {isAuthenticated && user?.role == "user" ? (
                 <li>
                   <Link
                     href="/user/cart"
@@ -181,7 +192,19 @@ export default function Header() {
                     Cart ({carts.length})
                   </Link>
                 </li>
-              )}
+              ) : isAuthenticated && user?.role == "admin" ? (
+                <Button
+                  className={`inline-flex ${
+                    sidebarDashboard
+                      ? "bg-primary-100 text-white"
+                      : "bg-white/75 text-primary-300"
+                  } items-center gap-2 p-2 rounded-md hover:text-white hover:bg-primary-100`}
+                  onClick={handleDashboard}
+                >
+                  <FontAwesomeIcon className="mr-2" icon={faDashboard} />
+                  Dashboard
+                </Button>
+              ) : null}
 
               {user && isAuthenticated ? (
                 <li>

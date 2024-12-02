@@ -35,7 +35,11 @@ export const PromoBanner = () => {
               <Image
                 width={1000}
                 height={1000}
-                src={banner.imageUrl || "/img/noimage.webp"}
+                src={
+                  banner.imageUrl.includes("http")
+                    ? banner.imageUrl
+                    : "/img/noimage.webp"
+                }
                 alt={banner.name}
                 className="object-cover w-full h-full rounded-lg shadow-md"
               />
