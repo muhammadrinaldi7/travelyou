@@ -65,11 +65,7 @@ export default function AdminBannersPage() {
     <>
       <LayoutDashboard title="Banners" desc="Manage Your Banners!">
         <section className="container py-4 mx-auto">
-          <BreadCumbs
-            title="Banners"
-            to="/admin/dashboard"
-            prevPage="Dashboard"
-          />
+          <BreadCumbs title="Banners" to="/admin" prevPage="Dashboard" />
           <Link
             href="/admin/banners/addBanner"
             className={buttonVariants({
