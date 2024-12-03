@@ -120,14 +120,19 @@ export default function Header() {
                     <Link href="/#promo"> Promo </Link>
                   </li>
                   {isAuthenticated && user ? (
-                    <li>
-                      <button
-                        onClick={() => setIsModalOpen(true)}
-                        className="text-red-400"
-                      >
-                        Log Out
-                      </button>
-                    </li>
+                    <>
+                      <li>
+                        <Link href="/user/transaction"> My Transaction </Link>
+                      </li>
+                      <li>
+                        <button
+                          onClick={() => setIsModalOpen(true)}
+                          className="text-red-400"
+                        >
+                          Log Out
+                        </button>
+                      </li>
+                    </>
                   ) : (
                     <li>
                       <Link href={"/auth/Login"} className="text-green-400">

@@ -11,13 +11,13 @@ export const ProfileModal = (props: { class: string; onOpen: () => void }) => {
           role="menu"
         >
           <div className="p-2">
-            <a
-              href="#"
+            <Link
+              href="/user/profile"
               className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-primary-300/65 hover:text-gray-700"
               role="menuitem"
             >
               My profile
-            </a>
+            </Link>
 
             <Link
               href="/user/transaction"
@@ -26,14 +26,6 @@ export const ProfileModal = (props: { class: string; onOpen: () => void }) => {
             >
               My Transaction
             </Link>
-
-            <a
-              href="#"
-              className="block rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-primary-300/65 hover:text-gray-700"
-              role="menuitem"
-            >
-              Team settings
-            </a>
           </div>
 
           <div className="p-2">
