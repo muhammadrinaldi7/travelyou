@@ -8,6 +8,8 @@ import CardCategory from "@/components/card/cardCategory";
 import ActivityCard from "@/components/card/listActivity";
 import { ColourPagination } from "@/components/pagination/pagination";
 import Spinner from "@/components/spinner/Spinner";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -63,7 +65,6 @@ export default function ActivityPage() {
   const totalPages = activityFiltered
     ? Math.ceil(activityFiltered.length / itemsPerPage)
     : 0;
-  // console.log(totalPages);
   return (
     <>
       <div className="flex flex-col w-full bg-white">
@@ -71,7 +72,7 @@ export default function ActivityPage() {
           className="relative flex justify-center h-64 mx-1 bg-center bg-cover rounded-b-2xl"
           style={{ backgroundImage: "url('/img/blue-sea.webp')" }}
         >
-          <div className="w-[80%] drop-shadow-xl shadow-lg h-72 container flex flex-col mx-auto mt-28 rounded-xl items-center p-6 bg-gray-100/95">
+          <div className="w-[80%] drop-shadow-md shadow-lg h-72 container flex flex-col mx-auto mt-28 rounded-xl items-center p-6 bg-gray-100/95">
             <div className="flex items-center justify-center w-full">
               <h1 className="self-center text-xl font-travelyouu text-primary-300">
                 TravelYouuu
@@ -125,13 +126,13 @@ export default function ActivityPage() {
               </h1>
             </div>
             <div className="flex flex-col  md:px-10 md:flex-row">
-              <div className="flex flex-col md:w-[20%] rounded-xl shadow-xl h-fit p-4 bg-white">
+              <div className="flex flex-col md:w-[20%] rounded-xl shadow-md h-fit p-4 bg-white">
                 <h1 className="self-center text-xl font-tittle text-gray-600">
-                  Filtering
+                  Filter
                 </h1>
                 <div className="flex flex-col gap-2 mt-4">
-                  <h1 className="text-sm font-semibold">Harga Maksimal</h1>
-                  <input
+                  <Label className="text-sm font-semibold">Harga Max</Label>
+                  <Input
                     type="number"
                     value={filteredActivities.hargaMin}
                     onChange={(e) =>
@@ -145,8 +146,8 @@ export default function ActivityPage() {
                   />
                 </div>
                 <div className="flex flex-col gap-2 mt-4">
-                  <h1 className="text-sm font-semibold">Rating</h1>
-                  <input
+                  <Label className="text-sm font-semibold">Rating</Label>
+                  <Input
                     type="number"
                     value={filteredActivities.rating}
                     onChange={(e) =>

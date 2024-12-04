@@ -56,7 +56,7 @@ export const PromoBanner = () => {
       <div className="flex flex-col w-full p-4 mt-5">
         {/* <h2 className="text-2xl font-semibold">Promo Terbaru</h2> */}
         <Link
-          href={"/"}
+          href={"/user/promo"}
           className="self-end mr-5 hover:underline hover:text-primary-200"
         >
           See All

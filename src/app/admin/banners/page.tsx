@@ -4,7 +4,7 @@ import { useFetchBanner } from "@/api/hooks/Banner/useFetchBanner";
 import { usePostBanner } from "@/api/hooks/Banner/usePostBanner";
 import { BreadCumbs } from "@/components/breadcumb/breadCumbs";
 import LayoutDashboard from "@/components/layout/LayoutDashboard";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -66,14 +66,8 @@ export default function AdminBannersPage() {
       <LayoutDashboard title="Banners" desc="Manage Your Banners!">
         <section className="container py-4 mx-auto">
           <BreadCumbs title="Banners" to="/admin" prevPage="Dashboard" />
-          <Link
-            href="/admin/banners/addBanner"
-            className={buttonVariants({
-              variant: "default",
-              className: "mt-4 bg-green-400",
-            })}
-          >
-            Add Banner
+          <Link href="/admin/banners/addBanner">
+            <Button className="bg-green-600">Add Banner</Button>
           </Link>
           <Table className="mt-4">
             <TableCaption>A list of your Banners.</TableCaption>

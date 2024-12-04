@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       "www.ancol.com",
       "s-light.tiket.photos",
       "media.kompas.tv",
+      "via.placeholder.com",
+      "raw.githubusercontent.com",
+      "i.pinimg.com",
+      "4.bp.blogspot.com",
     ],
   },
 };

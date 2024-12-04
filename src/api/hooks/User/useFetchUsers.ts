@@ -12,3 +12,13 @@ export const useFetchLoggedUser = (url: string) => {
     },
   });
 };
+
+export const useFetchAllUsers = (url: string) => {
+  return useQuery<Response<User[]>, Error>({
+    queryKey: ["fetchAllUsers", url],
+    queryFn: async () => {
+      const usersRes = await axiosClient.get<Response<User[]>>(url);
+      return usersRes.data;
+    },
+  });
+};

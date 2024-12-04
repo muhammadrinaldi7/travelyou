@@ -12,7 +12,7 @@ export const BreadCumbs = ({
   to: string;
 }) => {
   return (
-    <nav aria-label="Breadcrumb">
+    <nav className="my-4" aria-label="Breadcrumb">
       <ol className="flex items-center gap-1 text-sm text-gray-600">
         <li>
           <Link href="/" className="block transition hover:text-gray-700">

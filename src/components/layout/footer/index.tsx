@@ -8,12 +8,9 @@ import {
   faInstagram,
   faLinkedin,
   faTwitter,
+  faWhatsapp,
 } from "@fortawesome/free-brands-svg-icons";
-import {
-  faMailForward,
-  faMap,
-  faPhone,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMailForward, faMap } from "@fortawesome/free-solid-svg-icons";
 import { useFetchPaymentMethod } from "@/api/hooks/Payment/useFetchPaymenMethod";
 import endpoints from "@/api/endpoints";
 import { usePaymentStore } from "@/stores/paymentStore";
@@ -48,9 +45,18 @@ const Footer = () => {
             <div className="flex mt-4 space-x-4">
               {[
                 { icon: <FontAwesomeIcon icon={faFacebook} />, link: "#" },
-                { icon: <FontAwesomeIcon icon={faInstagram} />, link: "#" },
-                { icon: <FontAwesomeIcon icon={faTwitter} />, link: "#" },
-                { icon: <FontAwesomeIcon icon={faLinkedin} />, link: "#" },
+                {
+                  icon: <FontAwesomeIcon icon={faInstagram} />,
+                  link: "https://www.instagram.com/_mrinaldi",
+                },
+                {
+                  icon: <FontAwesomeIcon icon={faTwitter} />,
+                  link: "#",
+                },
+                {
+                  icon: <FontAwesomeIcon icon={faLinkedin} />,
+                  link: "https://www.linkedin.com/in/muhammadrinaldi7",
+                },
               ].map((social, index) => (
                 <a
                   key={index}
@@ -124,10 +130,10 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <FontAwesomeIcon
-                  icon={faPhone}
+                  icon={faWhatsapp}
                   className="w-5 h-5 text-white"
                 />
-                <span>+62 812-3456-7890</span>
+                <span>+62 895-2319-6044</span>
               </div>
             </div>
           </div>
@@ -137,7 +143,15 @@ const Footer = () => {
         <div className="pt-6 mt-6 text-center border-t border-white">
           <p className="text-white">
             © {new Date().getFullYear()} TravelYouuu. All Rights Reserved.
-            Designed with ❤️ by TravelYouuu Team
+            Designed with ❤️ by{" "}
+            <a
+              href="http://rndev.my.id"
+              target="_blank"
+              className="text-white transition-colors hover:underline"
+              rel="noopener noreferrer"
+            >
+              @Muhammad Rinaldi
+            </a>
           </p>
         </div>
       </div>
