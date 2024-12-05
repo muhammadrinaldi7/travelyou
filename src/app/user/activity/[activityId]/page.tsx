@@ -88,7 +88,7 @@ export default function ActivityDetailPage() {
             </div>
 
             <div
-              className="text-gray-600 rounded-lg w-full h-full overflow-hidden"
+              className="text-gray-600 rounded-lg w-full h-full overflow-auto"
               dangerouslySetInnerHTML={{
                 __html: activity?.data?.location_maps || "",
               }}
