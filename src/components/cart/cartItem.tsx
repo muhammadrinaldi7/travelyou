@@ -6,6 +6,7 @@ import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import usePostCart from "@/api/hooks/Cart/usePostCart";
 import endpoints from "@/api/endpoints";
 import { useTransactionStore } from "@/stores/transactionStore";
+import { ConfirmationPopup } from "../modals/confirmationPopUp";
 
 const CartItem = ({
   id,
@@ -22,12 +23,13 @@ const CartItem = ({
   imageUrl: string;
   price: number;
 }) => {
-  const { removeCart, addQuantity, removeQuantity, toggleSelectItem } =
+  const { removeCart, addQuantity, carts, removeQuantity, toggleSelectItem } =
     useCartsStore();
   const { setTransactionItemsPayload, transactionItemsPayload } =
     useTransactionStore();
   // const [isChecked, setIsChecked] = useState(false); // State untuk checkbox
   const { updateCart } = usePostCart(endpoints.cartUpdate + id);
+  const { deleteCart } = usePostCart(endpoints.deleteCart);
 
   const handleCheckboxChange = () => {
     // setIsChecked(!isChecked);
@@ -53,6 +55,21 @@ const CartItem = ({
     }
   };
 
+  const handleDelete = (id: string) => {
+    deleteCart(id);
+    removeCart(id);
+  };
+  const handleDeleteCart = (id: string) => {
+    const confirmPop = ConfirmationPopup({
+      message: "Apakah kamu yakin ingin menghapus item ini?",
+      onConfirm: () => {
+        handleDelete(id);
+      },
+    });
+    confirmPop.showPopup();
+  };
+
+  console.log(carts);
   return (
     <div className="flex flex-col justify-between md:flex-row p-4 border-b border-gray-200">
       <div className="flex items-center space-x-4">
@@ -117,7 +134,7 @@ const CartItem = ({
         </div>
         <button
           className="text-red-500 hover:text-red-700"
-          onClick={() => removeCart(activityId)}
+          onClick={() => handleDeleteCart(id)}
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>

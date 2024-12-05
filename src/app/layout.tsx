@@ -44,7 +44,7 @@ export default function RootLayout({
       >
         <LayoutProvider>
           <Header />
-          <Toaster position="top-right" />
+          <Toaster position="top-center" />
           <div className="container mx-auto">{children}</div>
           <Footer />
         </LayoutProvider>

@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export const CardPromo = (props: {
+  id: string;
   discount: string;
   imageUrl: string;
   title: string;
@@ -31,9 +33,12 @@ export const CardPromo = (props: {
             {props.description.slice(0, 50)}
           </p>
 
-          <span className="mt-4 block rounded-md border border-primary-300 bg-primary-300 px-5 py-3 text-sm font-medium uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-primary-300">
+          <Link
+            href={`promo/${props.id}`}
+            className="mt-4 block rounded-md border border-primary-300 bg-primary-300 px-5 py-3 text-sm font-medium uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-primary-300"
+          >
             Learn More
-          </span>
+          </Link>
         </div>
       </div>
     </>

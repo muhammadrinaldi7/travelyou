@@ -25,7 +25,7 @@ const endpoints = {
   cart: "/carts",
   cartUpdate: "/update-cart/",
   addCart: "/add-cart",
-  deleteCart: "/delete-cart/",
+  deleteCart: "/delete-cart",
 
   // Transaction
   MyTransaction: "/my-transactions",

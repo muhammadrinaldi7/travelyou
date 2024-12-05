@@ -11,9 +11,15 @@ export interface TokenSession {
 export default function middleware(req: NextRequest) {
   const session = req.cookies.get("token")?.value;
   const urlPath = req.nextUrl.pathname;
-  if (urlPath === "/user/activity") {
+
+  const publicPaths = ["/user/activity", "/user/promo", "/user/promo/:id"];
+
+  if (publicPaths.some((path) => urlPath.startsWith(path))) {
     return NextResponse.next();
   }
+  // if (urlPath === "/user/activity" || urlPath === "/user/promo/:path*") {
+  //   return NextResponse.next();
+  // }
   if (!session) {
     return NextResponse.redirect(new URL("/", req.url));
   }

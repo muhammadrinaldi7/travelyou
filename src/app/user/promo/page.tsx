@@ -21,6 +21,7 @@ export default function PromoPage() {
                     discount={promo.promo_discount_price.toLocaleString()}
                     imageUrl={promo.imageUrl}
                     title={promo.title}
+                    id={promo.id}
                     description={promo.description}
                   />
                 ))}

@@ -4,6 +4,7 @@ import endpoints from "@/api/endpoints";
 import usePostTransaction from "@/api/hooks/Transactions/usePostTransaction";
 import { BreadCumbs } from "@/components/breadcumb/breadCumbs";
 import Cart from "@/components/cart/cart";
+import LayoutUser from "@/components/layout/LayoutUser";
 import { useAuthStore } from "@/stores/authStore";
 import { useCartsStore } from "@/stores/cartsStore";
 import { usePaymentStore } from "@/stores/paymentStore";
@@ -14,7 +15,7 @@ import React from "react";
 import toast from "react-hot-toast";
 
 const CartPage = () => {
-  const { getSelectedItems, carts, clearSelectedItems, cartToPayment } =
+  const { getSelectedItems, clearSelectedItems, cartToPayment } =
     useCartsStore();
 
   const selectedItems = getSelectedItems();
@@ -24,8 +25,7 @@ const CartPage = () => {
   const { createTransaction } = usePostTransaction(endpoints.createTransaction);
   const { transactionItemsPayload, setTransactionItemsPayload } =
     useTransactionStore();
-  console.log(selectedItems);
-  console.log(carts);
+
   const handleSelectPayment = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedValue = e.target.value;
     setTransactionItemsPayload({
@@ -59,14 +59,11 @@ const CartPage = () => {
 
   // console.log(selectedItems);
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col py-20 px-5 items-center justify-center">
-      <div className="self-start ml-2">
-        <BreadCumbs title={`Cart`} prevPage="Activity" to="/user/activity" />
-      </div>
-      <h1 className="text-3xl self-start ml-6 my-3 font-bold">Cart</h1>
-      <div className="flex w-full flex-col gap-4 md:flex-row">
+    <LayoutUser title="Cart" desc="Your Cart">
+      <BreadCumbs title="Cart" to="/" prevPage="Home" />
+      <div className="flex w-full flex-col gap-4 lg:flex-row">
         <Cart />
-        <div className="flex bg-white md:w-2/4 h-fit rounded-lg shadow-md p-6 gap-4 flex-col">
+        <div className="flex bg-gray-50 md:w-2/4 h-fit rounded-lg shadow-md p-6 gap-4 flex-col">
           <h2 className="text-lg text-nowrap font-bold mb-4">Transaction</h2>
           <div className="flex border border-primary-300 drop-shadow-md shadow-lg rounded-xl p-2 flex-col space-y-4">
             {selectedItems.length > 0 ? (
@@ -144,28 +141,8 @@ const CartPage = () => {
           </button>
         </div>
       </div>
-    </div>
+    </LayoutUser>
   );
 };
 
 export default CartPage;
-{
-  /* <select
-  name="payment"
-  className="mt-1.5 w-1/2 rounded-lg border-gray-300 text-gray-700 sm:text-sm"
-  id=""
->
-  {paymentMethodBanks?.map((payment) => (
-    <option key={payment.id} value={payment.id}>
-      <Image
-        src={payment.imageUrl}
-        width={10}
-        height={10}
-        className="w-8 h-8 object-cover object-center rounded-full"
-        alt="payment"
-      />
-      {payment.name}
-    </option>
-  ))}
-</select>; */
-}

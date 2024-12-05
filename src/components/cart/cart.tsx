@@ -19,19 +19,22 @@ const Cart = () => {
   };
   return (
     <div className="container mx-auto px-2">
-      <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold mb-4">Your Cart</h2>
+      <div className="w-full mx-auto p-6 bg-gray-50 rounded-lg shadow-md">
         {cart.length === 0 ? (
           <p className="text-gray-500">Your cart is empty.</p>
         ) : (
           <>
             <div className="space-y-4">
-              <input
-                type="checkbox"
-                checked={selectedItems.length === cart.length}
-                onChange={handleCheckAll}
-                className="h-5 w-5"
-              />
+              <div className="flex items-center gap-4">
+                <input
+                  type="checkbox"
+                  checked={selectedItems.length === cart.length}
+                  onChange={handleCheckAll}
+                  className="h-5 w-5"
+                />
+                <h1>Select All</h1>
+              </div>
+
               {cart.map((item) => (
                 <CartItem
                   key={item.activityId}
@@ -57,12 +60,6 @@ const Cart = () => {
                   .toLocaleString()}
               </p>
             </div>
-            {/* <button
-              className="mt-4 w-full bg-red-500 text-white py-2 rounded hover:bg-red-600"
-              onClick={clearCart}
-            >
-              Clear Cart
-            </button> */}
           </>
         )}
       </div>

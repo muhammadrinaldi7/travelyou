@@ -19,7 +19,7 @@ interface CartsState {
   setCarts: (items: Cart[]) => void;
   addQuantity: (activityId: string) => void;
   removeQuantity: (activityId: string) => void;
-  removeCart: (activityId: string) => void;
+  removeCart: (id: string) => void;
   clearCart: () => void;
   addItemCart: (item: number) => void;
   toggleSelectItem: (activityId: string) => void; // Fungsi untuk toggle item yang dipilih
@@ -91,9 +91,9 @@ export const useCartsStore = create<CartsState>((set, get) => ({
     );
     set({ carts: updatedCarts }); // Update the state
   },
-  removeCart: (activityId) =>
+  removeCart: (id) =>
     set((state) => ({
-      carts: state.carts.filter((item) => item.activityId !== activityId),
+      carts: state.carts.filter((item) => item.id !== id),
     })),
 
   addQuantity: (activityId) =>
