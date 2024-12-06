@@ -1,10 +1,14 @@
 "use client";
 import endpoints from "@/api/endpoints";
-import { useFetchActivity } from "@/api/hooks/Activity/useFetchActivity";
+import {
+  useFetchActivity,
+  useFetchCategory,
+} from "@/api/hooks/Activity/useFetchActivity";
 import { useFetchBanner } from "@/api/hooks/Banner/useFetchBanner";
 import { useFetchPromo } from "@/api/hooks/Promo/useFetchPromo";
 import { Button } from "@/components/ui/button";
 import {
+  faLayerGroup,
   faSignHanging,
   faTags,
   faTicket,
@@ -17,6 +21,7 @@ export default function DashboardPage() {
   const { data: promo } = useFetchPromo(endpoints.promo);
   const { data: activity } = useFetchActivity(endpoints.activity);
   const { data: users } = useFetchActivity(endpoints.users);
+  const { data: categories } = useFetchCategory(endpoints.category);
   return (
     <>
       <div className="mt-4 flex flex-col gap-4">
@@ -66,7 +71,26 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500">Total Promos</p>
           </div>
           <div className="ml-auto text-2xl font-medium text-gray-900">
-            <Button className="bg-blue-600">Manage</Button>
+            <Link href={"/admin/promos"}>
+              <Button className="bg-blue-600">Manage</Button>
+            </Link>
+          </div>
+        </article>
+        <article className="flex items-center gap-4 rounded-lg border shadow-sm border-gray-100 bg-white p-6">
+          <span className="rounded-full bg-blue-100 p-3 text-blue-600">
+            <FontAwesomeIcon icon={faLayerGroup} className="size-8" />
+          </span>
+
+          <div>
+            <p className="text-2xl font-medium text-gray-900">
+              {categories?.data.length}
+            </p>
+            <p className="text-sm text-gray-500">Total Categories</p>
+          </div>
+          <div className="ml-auto text-2xl font-medium text-gray-900">
+            <Link href={"/admin/categories"}>
+              <Button className="bg-blue-600">Manage</Button>
+            </Link>
           </div>
         </article>
         <article className="flex items-center gap-4 rounded-lg border shadow-sm border-gray-100 bg-white p-6">
@@ -81,7 +105,9 @@ export default function DashboardPage() {
             <p className="text-sm text-gray-500">Total Activities</p>
           </div>
           <div className="ml-auto text-2xl font-medium text-gray-900">
-            <Button className="bg-blue-600">Manage</Button>
+            <Link href="/admin/activities">
+              <Button className="bg-blue-600">Manage</Button>
+            </Link>
           </div>
         </article>
       </div>

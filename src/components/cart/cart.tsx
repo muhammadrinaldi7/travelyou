@@ -3,11 +3,15 @@ import { useCartsStore } from "@/stores/cartsStore";
 import React from "react";
 import CartItem from "./cartItem";
 import { useTransactionStore } from "@/stores/transactionStore";
+import { useFetchCart } from "@/api/hooks/Cart/useFetchCart";
+import endpoints from "@/api/endpoints";
 
 const Cart = () => {
-  const { carts: cart, selectedItems, toggleAllItems } = useCartsStore();
+  const { selectedItems, toggleAllItems } = useCartsStore();
   const { setTransactionItemsPayload, transactionItemsPayload } =
     useTransactionStore();
+  const { data: cartData } = useFetchCart(endpoints.cart);
+  const cart = cartData?.data || [];
   const handleCheckAll = () => {
     const allCarts = cart.map((cart) => cart.id);
     setTransactionItemsPayload({

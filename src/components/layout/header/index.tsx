@@ -17,14 +17,17 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useFetchCart } from "@/api/hooks/Cart/useFetchCart";
+import endpoints from "@/api/endpoints";
 export default function Header() {
   const { toggleOpen, open, sidebarDashboard, toggleSidebarDashboard } =
     useHeaderStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [profileModal, setProfileModal] = useState(false);
   const { user, isAuthenticated, logout } = useAuthStore();
-  const { carts, setCarts } = useCartsStore();
-
+  const { setCarts } = useCartsStore();
+  const { data: cart } = useFetchCart(endpoints.cart);
+  const carts = cart?.data || [];
   const router = useRouter();
   const handleLogout = () => {
     setIsModalOpen(false);

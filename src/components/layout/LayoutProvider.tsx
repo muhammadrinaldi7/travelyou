@@ -32,7 +32,7 @@ export default function LayoutProvider({
             endpoints.cart
           );
           const itemCart = cartUser.data;
-          if (cartUser.data.data.length > 0) {
+          if (cartUser.data.data.length >= 0) {
             setCarts(itemCart.data);
           }
         } else {

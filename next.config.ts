@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       "raw.githubusercontent.com",
       "i.pinimg.com",
       "4.bp.blogspot.com",
+      "robohash.org",
     ],
   },
 };

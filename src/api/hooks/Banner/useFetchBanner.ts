@@ -19,3 +19,13 @@ export const useFetchBanner = (url: string) => {
     },
   });
 };
+
+export const useFetchBannerById = (url: string) => {
+  return useQuery<Response<Banner>, Error>({
+    queryKey: ["fetchBannerById", url],
+    queryFn: async () => {
+      const bannerRes = await axiosClient.get<Response<Banner>>(url);
+      return bannerRes.data;
+    },
+  });
+};

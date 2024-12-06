@@ -6,7 +6,9 @@ import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import usePostCart from "@/api/hooks/Cart/usePostCart";
 import endpoints from "@/api/endpoints";
 import { useTransactionStore } from "@/stores/transactionStore";
-import { ConfirmationPopup } from "../modals/confirmationPopUp";
+// import { ConfirmationPopup } from "../modals/confirmationPopUp";
+import toast from "react-hot-toast";
+import { Button } from "../ui/button";
 
 const CartItem = ({
   id,
@@ -23,7 +25,7 @@ const CartItem = ({
   imageUrl: string;
   price: number;
 }) => {
-  const { removeCart, addQuantity, carts, removeQuantity, toggleSelectItem } =
+  const { removeCart, addQuantity, removeQuantity, toggleSelectItem } =
     useCartsStore();
   const { setTransactionItemsPayload, transactionItemsPayload } =
     useTransactionStore();
@@ -60,16 +62,33 @@ const CartItem = ({
     removeCart(id);
   };
   const handleDeleteCart = (id: string) => {
-    const confirmPop = ConfirmationPopup({
-      message: "Apakah kamu yakin ingin menghapus item ini?",
-      onConfirm: () => {
-        handleDelete(id);
-      },
-    });
-    confirmPop.showPopup();
+    toast((t) => (
+      <div className="flex flex-col gap-4">
+        <p className="text-center">
+          Are you sure you want to delete this cart?
+        </p>
+        <div className="flex justify-center items-center gap-2">
+          <Button
+            className="bg-green-600 text-white"
+            onClick={() => {
+              toast.dismiss(t.id);
+              handleDelete(id);
+              toast.success("Cart deleted successfully");
+            }}
+          >
+            Yes
+          </Button>
+          <Button
+            className="bg-red-600 text-white"
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </Button>
+        </div>
+      </div>
+    ));
   };
 
-  console.log(carts);
   return (
     <div className="flex flex-col justify-between md:flex-row p-4 border-b border-gray-200">
       <div className="flex items-center space-x-4">

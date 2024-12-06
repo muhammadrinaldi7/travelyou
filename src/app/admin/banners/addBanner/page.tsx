@@ -1,45 +1,27 @@
 "use client";
 import endpoints from "@/api/endpoints";
 import { usePostBanner } from "@/api/hooks/Banner/usePostBanner";
-import { usePostImage } from "@/api/hooks/Image/usePostImage";
+import useImageUpload from "@/api/hooks/uploadImage/useUploadImage";
 import { BreadCumbs } from "@/components/breadcumb/breadCumbs";
 import LayoutDashboard from "@/components/layout/LayoutDashboard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
 export default function AddBanner() {
-  const { addImage } = usePostImage(endpoints.uploadImage);
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string | null>(null);
   const { addBanner } = usePostBanner(endpoints.addBanner);
   const route = useRouter();
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
 
-    if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
-      if (file.size > 999999) {
-        toast.error("File size must be less than 1MB");
-        return;
-      }
-      addImage(
-        { image: file },
-        {
-          onSuccess: (imageUrl) => {
-            setUploadedImageUrl(imageUrl);
-            toast.success("Image uploaded successfully!");
-          },
-          onError: (error) => {
-            console.log("Image upload failed:", error);
-            toast.error(error.message);
-          },
-        }
-      );
-    }
-  };
+  const { handleUploadImage } = useImageUpload({
+    onSuccess: (imageUrl) => {
+      setUploadedImageUrl(imageUrl);
+    },
+  });
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -89,9 +71,18 @@ export default function AddBanner() {
             </div>
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="name">Foto Banner</Label>
+              {uploadedImageUrl && (
+                <Image
+                  width={1000}
+                  height={1000}
+                  src={uploadedImageUrl}
+                  alt="Uploaded"
+                  className="w-32 h-32 object-cover"
+                />
+              )}
               <Input
                 type="file"
-                onChange={(e) => handleUpload(e)}
+                onChange={handleUploadImage}
                 name="image"
                 accept="image/*"
                 id="image"

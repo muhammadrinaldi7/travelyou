@@ -30,7 +30,7 @@ export default function AdminBannersPage() {
           <p>Are you sure you want to delete this banner?</p>
           <div className="flex gap-2">
             <Button
-              className="bg-red-600 text-white"
+              className="bg-green-600 text-white"
               onClick={() => {
                 toast.dismiss(t.id);
                 deleteBanner(id, {
@@ -47,7 +47,7 @@ export default function AdminBannersPage() {
               Yes
             </Button>
             <Button
-              className="bg-gray-400 text-black"
+              className="bg-red-600 text-white"
               onClick={() => toast.dismiss(t.id)}
             >
               No
@@ -94,9 +94,11 @@ export default function AdminBannersPage() {
                     />
                   </TableCell>
                   <TableCell className="flex gap-2">
-                    <Button className="bg-blue-600">
-                      <FontAwesomeIcon icon={faEdit} />
-                    </Button>
+                    <Link href={`/admin/banners/editBanner/${banner.id}`}>
+                      <Button className="bg-blue-600">
+                        <FontAwesomeIcon icon={faEdit} />
+                      </Button>
+                    </Link>
                     <Button
                       onClick={() => handleDelete(banner.id)}
                       className="bg-red-600 "

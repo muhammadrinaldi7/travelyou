@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import { useFetchActivity } from "@/api/hooks/Activity/useFetchActivity";
 import endpoints from "@/api/endpoints";
+import { Button } from "../ui/button";
 
 const ActivitySection: React.FC = () => {
   const { data: activityCategories } = useFetchActivity(endpoints.activity);
@@ -75,9 +76,11 @@ const ActivitySection: React.FC = () => {
                   Rp. {activity.price_discount.toLocaleString()}
                 </span>
               </div>
-              <button className="px-4 py-2 mt-2 text-white transition-colors bg-blue-600 rounded-lg hover:bg-blue-700">
-                Pesan Sekarang
-              </button>
+              <Link href={`/user/activity/${activity.id}`}>
+                <Button className="w-full bg-primary-300 mt-4">
+                  Pesan Sekarang
+                </Button>
+              </Link>
             </div>
           </div>
         ))}

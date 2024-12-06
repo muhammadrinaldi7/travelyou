@@ -1,8 +1,10 @@
 "use client";
 import endpoints from "@/api/endpoints";
 import { useFetchActivityById } from "@/api/hooks/Activity/useFetchActivity";
+import usePostCart from "@/api/hooks/Cart/usePostCart";
 import { BreadCumbs } from "@/components/breadcumb/breadCumbs";
 import LayoutUser from "@/components/layout/LayoutUser";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -11,16 +13,38 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { useAuthStore } from "@/stores/authStore";
+import { useCartsStore } from "@/stores/cartsStore";
+import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 export default function ActivityDetailPage() {
   const params = useParams();
   const id = params.activityId;
   const { data: activity } = useFetchActivityById(
     endpoints.activityDetail + id
   );
+  const { addCart } = usePostCart(endpoints.addCart);
+  const { addItemCart } = useCartsStore();
+  const routes = useRouter();
+  const { isAuthenticated } = useAuthStore();
+  const handleToAddCart = (activityId: string) => {
+    if (!isAuthenticated) {
+      toast.error("You must be logged in to add to cart.");
+      routes.push("/auth/Login");
+      return;
+    }
+    try {
+      addItemCart(1);
+      addCart({ activityId });
+      toast.success("Item added to cart successfully!");
+    } catch (error) {
+      toast.error("Failed to add to cart. Please try again.");
+      console.error("Error adding to cart:", error);
+    }
+  };
 
   return (
     <>
@@ -34,8 +58,8 @@ export default function ActivityDetailPage() {
           prevPage="Activity"
         />
         <div className="flex gap-8  lg:flex-row flex-col ">
-          <div className="w-full px-10 md:w-[40%]">
-            <Carousel className="w-full h-full">
+          <div className="w-full  px-10 md:w-[40%]">
+            <Carousel className="w-ful flex items-center justify-centerl h-full">
               <CarouselContent>
                 {activity?.data?.imageUrls?.map((image, index) => (
                   <CarouselItem key={index}>
@@ -60,12 +84,23 @@ export default function ActivityDetailPage() {
             </Carousel>
           </div>
           <div className="w-full md:w-[60%]">
-            <h2 className="text-3xl font-bold mb-4">{activity?.data?.title}</h2>
+            <div className="flex w-full justify-between">
+              <h2 className="text-3xl font-bold mb-4">
+                {activity?.data?.title}
+              </h2>
+              <Button
+                onClick={() => handleToAddCart(activity?.data?.id || "")}
+                className="bg-primary-300"
+              >
+                <FontAwesomeIcon icon={faCartShopping} className="text-white" />{" "}
+                Add To Cart
+              </Button>
+            </div>
             <p className="text-gray-600 mb-4">{activity?.data?.description}</p>
-            <p className="text-gray-600 mb-4">
-              Harga:{" IDR. "}
-              <span className="line-through mr-2">
-                {activity?.data?.price.toLocaleString()}
+            <p className="text-primary-200 mb-4">
+              Price:{" "}
+              <span className="line-through text-red-500 mr-2">
+                {" IDR. "} {activity?.data?.price.toLocaleString()}
               </span>{" "}
               {" IDR. "}
               {activity?.data?.price_discount.toLocaleString()}{" "}

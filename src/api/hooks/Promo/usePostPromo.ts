@@ -1,44 +1,52 @@
+import axiosClient from "@/api/axiosClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { NoDataResponse } from "../Transactions/usePostTransaction";
-import axiosClient from "@/api/axiosClient";
 import endpoints from "@/api/endpoints";
 
-export interface AddBannerPayload {
-  name: string;
+export interface promoPayload {
+  title: string;
+  description: string;
   imageUrl: string | null;
+  terms_condition: string;
+  promo_code: string;
+  promo_discount_price: number;
+  minimum_claim_price: number;
 }
-export const usePostBanner = (url: string) => {
+export const usePostPromo = (url: string) => {
   const queryClient = useQueryClient();
-
-  const { mutate: addBanner } = useMutation({
-    mutationFn: async (payload: AddBannerPayload) => {
+  const { mutate: addPromo } = useMutation({
+    mutationFn: async (payload: promoPayload) => {
       const response = await axiosClient.post<NoDataResponse>(url, payload);
       return response.data;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["fetchPromo", url],
+      });
+    },
   });
-
-  const { mutate: deleteBanner } = useMutation({
+  const { mutate: deletePromo } = useMutation({
     mutationFn: async (id: string) => {
       const response = await axiosClient.delete<NoDataResponse>(`${url}/${id}`);
       return response.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["fetchBanner", endpoints.banner],
+        queryKey: ["fetchPromo", endpoints.promo],
       });
     },
   });
 
-  const { mutate: updateBanner } = useMutation({
-    mutationFn: async (payload: AddBannerPayload) => {
+  const { mutate: updatePromo } = useMutation({
+    mutationFn: async (payload: promoPayload) => {
       const response = await axiosClient.post<NoDataResponse>(url, payload);
       return response.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["fetchBanner", endpoints.banner],
+        queryKey: ["fetchPromo", endpoints.promo],
       });
     },
   });
-  return { addBanner, updateBanner, deleteBanner };
+  return { addPromo, deletePromo, updatePromo };
 };
