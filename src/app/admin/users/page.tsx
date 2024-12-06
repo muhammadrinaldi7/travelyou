@@ -17,6 +17,7 @@ import {
 import { faEdit, faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 export default function UsersPage() {
@@ -46,8 +47,12 @@ export default function UsersPage() {
     <>
       <LayoutDashboard title="Users" desc="Manage your users!">
         <BreadCumbs title="Users" to="/admin" prevPage="Dashboard" />
-        <div className="flex my-2 justify-between">
-          <Button className="bg-green-600">Add User</Button>
+        <div className="flex my-2 p-4 justify-between">
+          <Link href="/admin/users/addUser" className="w-fit">
+            <Button className="bg-green-600 shadow-lg hover:shadow-sm">
+              Add User
+            </Button>
+          </Link>
           <Input
             placeholder="Search by name"
             onChange={handleSearch}
@@ -77,8 +82,8 @@ export default function UsersPage() {
                   <Image
                     src={user.profilePictureUrl || "/img/noimage.webp"}
                     alt={user.name}
-                    width={50}
-                    height={50}
+                    width={100}
+                    height={100}
                     className="w-8 h-8 object-cover object-center rounded-full"
                   />
                 </TableCell>
@@ -89,9 +94,6 @@ export default function UsersPage() {
                   <div className="flex gap-2">
                     <Button size="sm" className="bg-blue-600">
                       <FontAwesomeIcon icon={faEdit} />
-                    </Button>
-                    <Button size="sm" className="bg-red-600">
-                      <FontAwesomeIcon icon={faTrashAlt} />
                     </Button>
                   </div>
                 </TableCell>

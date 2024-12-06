@@ -41,12 +41,9 @@ export default function RegisterPage() {
       (data) => {
         const res = data as Response<RegisterPageProps>;
         toast.success(res.data.name + " registered successfully!");
-        // console.log("Registration successful!", data);
       },
       (error) => {
         const errorRes = error as { response: { data: { message: string } } };
-        //  toast(errorRes.response.data.message);
-        // console.log("ini error", errorRes.response.data.message);
         toast.error(errorRes.response.data.message);
       }
     );
