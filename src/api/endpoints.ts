@@ -45,6 +45,7 @@ const endpoints = {
   updateCategory: "/update-category/",
 
   // Transaction
+  transaction: "/all-transactions",
   MyTransaction: "/my-transactions",
   createTransaction: "/create-transaction",
   updateTransactionProof: "/update-transaction-proof-payment/",

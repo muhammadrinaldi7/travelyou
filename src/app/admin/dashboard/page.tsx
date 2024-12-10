@@ -22,9 +22,10 @@ export default function DashboardPage() {
   const { data: activity } = useFetchActivity(endpoints.activity);
   const { data: users } = useFetchActivity(endpoints.users);
   const { data: categories } = useFetchCategory(endpoints.category);
+  const { data: transaction } = useFetchCategory(endpoints.transaction);
   return (
     <>
-      <div className="mt-4 flex flex-col gap-4">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 ">
         <article className="flex items-center gap-4 rounded-lg border shadow-sm border-gray-100 bg-white p-6">
           <span className="rounded-full bg-blue-100 p-3 text-blue-600">
             <FontAwesomeIcon icon={faUser} className="size-8" />
@@ -106,6 +107,23 @@ export default function DashboardPage() {
           </div>
           <div className="ml-auto text-2xl font-medium text-gray-900">
             <Link href="/admin/activities">
+              <Button className="bg-blue-600">Manage</Button>
+            </Link>
+          </div>
+        </article>
+        <article className="flex items-center gap-4 rounded-lg border shadow-sm border-gray-100 bg-white p-6">
+          <span className="rounded-full bg-blue-100 p-3 text-blue-600">
+            <FontAwesomeIcon icon={faTicket} className="size-8" />
+          </span>
+
+          <div>
+            <p className="text-2xl font-medium text-gray-900">
+              {transaction?.data.length}
+            </p>
+            <p className="text-sm text-gray-500">Total Transaction</p>
+          </div>
+          <div className="ml-auto text-2xl font-medium text-gray-900">
+            <Link href="/admin/transaction">
               <Button className="bg-blue-600">Manage</Button>
             </Link>
           </div>

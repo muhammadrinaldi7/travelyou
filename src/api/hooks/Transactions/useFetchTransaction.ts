@@ -11,3 +11,13 @@ export const useFetchMyTransaction = (url: string) => {
     },
   });
 };
+
+export const useFetchAllTransaction = (url: string) => {
+  return useQuery<ApiResponseTransaction, Error>({
+    queryKey: ["fetchAllTransaction", url],
+    queryFn: async () => {
+      const transactionRes = await axiosClient.get<ApiResponseTransaction>(url);
+      return transactionRes.data;
+    },
+  });
+};
