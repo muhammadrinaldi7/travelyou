@@ -7,6 +7,12 @@ export interface ApiResponseTransaction {
   message: string;
   data: Transaction[];
 }
+export interface ApiResponseTransactionById {
+  code: string;
+  status: string;
+  message: string;
+  data: Transaction;
+}
 
 // Transaction Interface
 export interface Transaction {

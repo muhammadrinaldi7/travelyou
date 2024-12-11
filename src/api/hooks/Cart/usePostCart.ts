@@ -20,6 +20,12 @@ export default function usePostCart(url: string) {
       const response = await axiosClient.post<cartResponse>(url, payload);
       return response.data.message;
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["fetchCart", endpoints.cart],
+      });
+      console.log("success");
+    },
   });
   const { mutate: addCart } = useMutation({
     mutationFn: async (payload: AddCartPayload) => {

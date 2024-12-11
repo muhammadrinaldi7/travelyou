@@ -1,5 +1,8 @@
 import axiosClient from "@/api/axiosClient";
-import { ApiResponseTransaction } from "@/stores/transactionStore";
+import {
+  ApiResponseTransaction,
+  ApiResponseTransactionById,
+} from "@/stores/transactionStore";
 import { useQuery } from "@tanstack/react-query";
 
 export const useFetchMyTransaction = (url: string) => {
@@ -7,6 +10,17 @@ export const useFetchMyTransaction = (url: string) => {
     queryKey: ["fetchMyTransaction", url],
     queryFn: async () => {
       const transactionRes = await axiosClient.get<ApiResponseTransaction>(url);
+      return transactionRes.data;
+    },
+  });
+};
+export const useFetchTransactionById = (url: string) => {
+  return useQuery<ApiResponseTransactionById, Error>({
+    queryKey: ["fetchTransactionById", url],
+    queryFn: async () => {
+      const transactionRes = await axiosClient.get<ApiResponseTransactionById>(
+        url
+      );
       return transactionRes.data;
     },
   });

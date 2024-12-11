@@ -2,6 +2,7 @@ import { BadgeOutline } from "../badges/badgeOutoine";
 import {
   faCircleCheck,
   faClock,
+  faEye,
   faXmarkCircle,
 } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
@@ -12,10 +13,36 @@ import endpoints from "@/api/endpoints";
 import UploadModal from "../modals/UploadModals";
 import { Transaction } from "@/stores/transactionStore";
 import { PaginationTransaction } from "../pagination/transactionPagination";
+import { Button } from "../ui/button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ITEMS_PER_PAGE = 5;
 
 export const MyTransactionTable = () => {
+  const defaultTransaction: Transaction = {
+    id: "",
+    userId: "",
+    paymentMethodId: "",
+    invoiceId: "",
+    orderDate: "",
+    expiredDate: "",
+    totalAmount: 0,
+    createdAt: "",
+    updatedAt: "",
+    status: "",
+    proofPaymentUrl: "",
+    payment_method: {
+      id: "",
+      name: "",
+      virtual_account_number: "",
+      virtual_account_name: "",
+      imageUrl: "",
+      createdAt: "",
+      updatedAt: "",
+    },
+    transaction_items: [],
+  };
+
   const { data: myTransactions, isLoading } = useFetchMyTransaction(
     endpoints.MyTransaction
   );
@@ -23,19 +50,43 @@ export const MyTransactionTable = () => {
     currentPage: 1,
     itemsPerPage: ITEMS_PER_PAGE,
   });
-  const [modalAction, setModalAction] = useState({ isOpen: false, id: "" });
+  const [modalAction, setModalAction] = useState({
+    isOpen: false,
+    detail: false,
+    id: "",
+    dataTransaction: defaultTransaction,
+  });
 
   const totalItems = myTransactions?.data.length || 0;
   const totalPages = Math.ceil(totalItems / pagination.itemsPerPage);
-  const currentTransactions = myTransactions?.data.slice(
-    (pagination.currentPage - 1) * ITEMS_PER_PAGE,
-    pagination.currentPage * ITEMS_PER_PAGE
-  );
+  const currentTransactions = myTransactions?.data
+    ?.sort((a, b) =>
+      a.proofPaymentUrl === null ? -1 : b.proofPaymentUrl === null ? 1 : 0
+    )
+    .slice(
+      (pagination.currentPage - 1) * ITEMS_PER_PAGE,
+      pagination.currentPage * ITEMS_PER_PAGE
+    );
 
-  const handleModalToggle = (id: string) => {
-    setModalAction({ isOpen: !modalAction.isOpen, id });
+  const handleModalToggle = (id: string, dataTransaction: Transaction) => {
+    setModalAction({
+      isOpen: !modalAction.isOpen,
+      id,
+      dataTransaction,
+      detail: false,
+    });
   };
-
+  const handleDetailModalToggle = (
+    id: string,
+    dataTransaction: Transaction
+  ) => {
+    setModalAction({
+      isOpen: !modalAction.isOpen,
+      id,
+      dataTransaction,
+      detail: true,
+    });
+  };
   const renderTransactionRow = (transaction: Transaction) => (
     <tr key={transaction.id}>
       <td className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
@@ -75,23 +126,30 @@ export const MyTransactionTable = () => {
           />
         </div>
       </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+      <td className="whitespace-nowrap flex justify-center items-center gap-2 px-4 py-2 text-gray-700">
+        <Button
+          className="bg-primary-200 hover:text-primary-300 hover:bg-white/75 text-white"
+          onClick={() => handleDetailModalToggle(transaction.id, transaction)}
+        >
+          <FontAwesomeIcon icon={faEye} />{" "}
+        </Button>
         <button
           className="px-4 py-2 bg-green-500 disabled:bg-green-300 text-white rounded-md hover:bg-green-700"
           disabled={transaction.proofPaymentUrl !== null}
-          onClick={() => handleModalToggle(transaction.id)}
+          onClick={() => handleModalToggle(transaction.id, transaction)}
         >
           Selesaikan Pembayaran
         </button>
         <UploadModal
           id={modalAction.id}
+          detailOpen={modalAction.detail}
           isOpen={modalAction.isOpen}
-          modalAction={() => handleModalToggle(modalAction.id)}
+          transactionById={modalAction.dataTransaction}
+          modalAction={() => setModalAction({ ...modalAction, isOpen: false })}
         />
       </td>
     </tr>
   );
-
   return (
     <>
       {isLoading && <Spinner />}

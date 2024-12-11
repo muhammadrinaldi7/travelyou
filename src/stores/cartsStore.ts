@@ -86,11 +86,10 @@ export const useCartsStore = create<CartsState>((set, get) => ({
   },
   cartToPayment: (processedIds) => {
     const state = get();
-    // Filter out items with IDs in processedIds
     const updatedCarts = state.carts.filter(
       (cart) => !processedIds.includes(cart.id)
     );
-    set({ carts: updatedCarts }); // Update the state
+    set({ carts: updatedCarts });
   },
   removeCart: (id) =>
     set((state) => ({

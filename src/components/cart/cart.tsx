@@ -1,6 +1,7 @@
 "use client";
+import type { Cart } from "@/stores/cartsStore";
 import { useCartsStore } from "@/stores/cartsStore";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CartItem from "./cartItem";
 import { useTransactionStore } from "@/stores/transactionStore";
 import { useFetchCart } from "@/api/hooks/Cart/useFetchCart";
@@ -11,7 +12,13 @@ const Cart = () => {
   const { setTransactionItemsPayload, transactionItemsPayload } =
     useTransactionStore();
   const { data: cartData } = useFetchCart(endpoints.cart);
-  const cart = cartData?.data || [];
+  // const cart = cartData?.data || [];
+  const [cart, setCart] = useState<Cart[]>([]);
+  useEffect(() => {
+    if (cartData) {
+      setCart(cartData?.data);
+    }
+  }, [cartData]);
   const handleCheckAll = () => {
     const allCarts = cart.map((cart) => cart.id);
     setTransactionItemsPayload({

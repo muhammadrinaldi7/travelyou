@@ -47,6 +47,7 @@ const endpoints = {
   // Transaction
   transaction: "/all-transactions",
   MyTransaction: "/my-transactions",
+  transactionById: "/transaction/",
   createTransaction: "/create-transaction",
   updateTransactionProof: "/update-transaction-proof-payment/",
 

@@ -6,7 +6,6 @@ import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import usePostCart from "@/api/hooks/Cart/usePostCart";
 import endpoints from "@/api/endpoints";
 import { useTransactionStore } from "@/stores/transactionStore";
-// import { ConfirmationPopup } from "../modals/confirmationPopUp";
 import toast from "react-hot-toast";
 import { Button } from "../ui/button";
 
@@ -29,7 +28,6 @@ const CartItem = ({
     useCartsStore();
   const { setTransactionItemsPayload, transactionItemsPayload } =
     useTransactionStore();
-  // const [isChecked, setIsChecked] = useState(false); // State untuk checkbox
   const { updateCart } = usePostCart(endpoints.cartUpdate + id);
   const { deleteCart } = usePostCart(endpoints.deleteCart);
 
@@ -94,7 +92,6 @@ const CartItem = ({
       <div className="flex items-center space-x-4">
         <input
           type="checkbox"
-          // checked={isChecked}
           checked={
             useCartsStore((state) => state.selectedItems.includes(activityId))
               ? true

@@ -15,7 +15,7 @@ import React from "react";
 import toast from "react-hot-toast";
 
 const CartPage = () => {
-  const { getSelectedItems, clearSelectedItems, cartToPayment } =
+  const { getSelectedItems, carts, clearSelectedItems, cartToPayment } =
     useCartsStore();
 
   const selectedItems = getSelectedItems();
@@ -34,7 +34,7 @@ const CartPage = () => {
       paymentMethodId: selectedValue,
     });
   };
-
+  console.log(carts);
   const handleCheckout = async () => {
     if (!isAuthenticated) {
       toast.error("You must be logged in to checkout.");
@@ -43,6 +43,10 @@ const CartPage = () => {
     }
 
     try {
+      if (transactionItemsPayload.paymentMethodId === "") {
+        toast.error("Please select a payment method!");
+        return;
+      }
       await createTransaction(transactionItemsPayload);
       setTransactionItemsPayload({
         cartIds: [],
@@ -51,13 +55,13 @@ const CartPage = () => {
       clearSelectedItems();
       const processedIds = selectedItems.map((item) => item.id);
       cartToPayment(processedIds);
-      toast.success("Checkout successful!");
+      route.push("/user/transaction");
     } catch (error) {
       console.error("Error creating transaction:", error);
     }
   };
 
-  // console.log(selectedItems);
+  console.log(selectedItems);
   return (
     <LayoutUser title="Cart" desc="Your Cart">
       <BreadCumbs title="Cart" to="/" prevPage="Home" />
