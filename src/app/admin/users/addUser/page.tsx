@@ -48,6 +48,7 @@ export default function AddUserPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     register(payloadData, (data) => {
+      console.log(data);
       toast.success("User added successfully!");
       router.push("/admin/users");
     });
