@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { proxiedUrl } from "@/lib/utils";
 import { useAuthStore } from "@/stores/authStore";
 import { useCartsStore } from "@/stores/cartsStore";
 import { faCartShopping, faStar } from "@fortawesome/free-solid-svg-icons";
@@ -67,7 +68,7 @@ export default function ActivityDetailPage() {
                       <Card>
                         <CardContent className="flex aspect-square items-center justify-center p-2">
                           <Image
-                            src={image}
+                            src={proxiedUrl(image)}
                             alt="image"
                             width={1000}
                             height={1000}
