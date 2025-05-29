@@ -1,6 +1,7 @@
 import endpoints from "@/api/endpoints";
 import { useFetchBanner } from "@/api/hooks/Banner/useFetchBanner";
 import { useFetchPromo } from "@/api/hooks/Promo/useFetchPromo";
+import { proxiedUrl } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import Slider from "react-slick";
@@ -15,7 +16,14 @@ export const PromoBanner = () => {
   };
   const { data: promos, isLoading } = useFetchPromo(endpoints.promo);
   const { data: banners } = useFetchBanner(endpoints.banner);
-
+  // const proxiedUrl = (imageUrl: string) => {
+  //   if (imageUrl === null || imageUrl == "" || imageUrl != "http%3A%2F%2F") {
+  //     return "/img/noimage.webp";
+  //   }
+  //   return `/api/image-proxy?url=${encodeURIComponent(
+  //     imageUrl || "/img/noimage.webp"
+  //   )}`;
+  // };
   return (
     <section
       className="container py-5 mx-auto bg-gradient-to-b from-gray-100 to-white"
@@ -35,11 +43,7 @@ export const PromoBanner = () => {
               <Image
                 width={1000}
                 height={1000}
-                src={
-                  banner.imageUrl.includes("http")
-                    ? banner.imageUrl
-                    : "/img/noimage.webp"
-                }
+                src={proxiedUrl(banner.imageUrl)}
                 alt={banner.name}
                 className="object-cover w-full h-full rounded-lg shadow-md"
               />
@@ -75,7 +79,7 @@ export const PromoBanner = () => {
                   width={1000}
                   height={100}
                   alt={promo.title}
-                  src={promo.imageUrl}
+                  src={proxiedUrl(promo.imageUrl)}
                   className="object-cover object-center w-full h-36"
                 />
                 <div className="flex flex-col w-full px-4 py-2 bg-white">

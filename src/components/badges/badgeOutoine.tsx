@@ -12,7 +12,7 @@ export const BadgeOutline = ({
 }) => {
   return (
     <span
-      className={`inline-flex items-center justify-center rounded-full border border-${color}-500 bg-${color}-100/95 px-2.5 py-0.5 text-${color}-700`}
+      className={`inline-flex items-center ${color} justify-center rounded-full  px-2.5 py-0.5 text-white`}
     >
       <FontAwesomeIcon icon={icon} className="-ms-1 me-1.5 size-4" />
 

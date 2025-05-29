@@ -1,3 +1,4 @@
+import { proxiedUrl } from "@/lib/utils";
 import Image from "next/image";
 
 export default function CardCategory(props: {
@@ -9,7 +10,7 @@ export default function CardCategory(props: {
       <Image
         width={1000}
         height={1000}
-        src={props.imageUrl}
+        src={proxiedUrl(props.imageUrl)}
         className="object-cover min-w-36 rounded-lg h-20"
         alt="destination"
       />

@@ -174,7 +174,7 @@ export default function ActivityPage() {
                     imageUrl={activity.imageUrls[0] || "/img/noimage.webp"}
                     title={activity.title}
                     description={activity.description}
-                    price={activity.price.toLocaleString()}
+                    price={activity.price}
                     province={activity.province}
                     city={activity.city}
                     price_discount={activity.price_discount}

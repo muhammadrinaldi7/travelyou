@@ -103,14 +103,13 @@ export const MyTransactionTable = () => {
       <td className="whitespace-nowrap px-4 py-2 text-gray-700">
         {new Date(transaction.expiredDate).toLocaleDateString()}
       </td>
-      <td className="flex whitespace-nowrap items-center px-4 py-2 text-gray-700">
-        <p>Rp. {transaction.totalAmount.toLocaleString("id-ID")}</p>
-      </td>
-      <td className="whitespace-nowrap px-4 py-2 text-gray-700">
+      <td className="whitespace-nowrap px-4 py-2 ">
         <div className="flex gap-2">
           <BadgeOutline
             title={transaction.status}
-            color={transaction.status === "Success" ? "green" : "red"}
+            color={
+              transaction.status === "Success" ? `bg-grreen-500` : `bg-red-500`
+            }
             icon={
               transaction.status === "pending"
                 ? faClock
@@ -120,8 +119,12 @@ export const MyTransactionTable = () => {
             }
           />
           <BadgeOutline
-            title={transaction.proofPaymentUrl ? "Paid" : "Not Paid"}
-            color={transaction.proofPaymentUrl ? "green" : "red"}
+            title={transaction.proofPaymentUrl ? "Paid" : "Unpaid"}
+            color={
+              transaction.proofPaymentUrl !== null
+                ? "bg-green-500"
+                : "bg-red-500"
+            }
             icon={transaction.proofPaymentUrl ? faCircleCheck : faXmarkCircle}
           />
         </div>
@@ -166,9 +169,6 @@ export const MyTransactionTable = () => {
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   Expired Date
-                </th>
-                <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
-                  Total Price
                 </th>
                 <th className="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                   Status

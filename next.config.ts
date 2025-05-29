@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
       "i.pinimg.com",
       "4.bp.blogspot.com",
       "robohash.org",
+      "cdn1.parksmedia.wdprapps.disney.com",
+      "bantentv.com",
+      "seaworld.com",
+      "www.arestravel.com",
     ],
   },
 };

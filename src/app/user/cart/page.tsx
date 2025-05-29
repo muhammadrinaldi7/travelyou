@@ -10,12 +10,13 @@ import { useCartsStore } from "@/stores/cartsStore";
 import { usePaymentStore } from "@/stores/paymentStore";
 import { useTransactionStore } from "@/stores/transactionStore";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import toast from "react-hot-toast";
 
 const CartPage = () => {
-  const { getSelectedItems, carts, clearSelectedItems, cartToPayment } =
+  const { getSelectedItems, clearSelectedItems, cartToPayment } =
     useCartsStore();
 
   const selectedItems = getSelectedItems();
@@ -30,11 +31,9 @@ const CartPage = () => {
     const selectedValue = e.target.value;
     setTransactionItemsPayload({
       ...transactionItemsPayload,
-      // cartIds: selectedItems.map((item) => item.id),
       paymentMethodId: selectedValue,
     });
   };
-  console.log(carts);
   const handleCheckout = async () => {
     if (!isAuthenticated) {
       toast.error("You must be logged in to checkout.");
@@ -61,16 +60,23 @@ const CartPage = () => {
     }
   };
 
-  console.log(selectedItems);
   return (
     <LayoutUser title="Cart" desc="Your Cart">
-      <BreadCumbs title="Cart" to="/" prevPage="Home" />
+      <div className="flex justify-between items-center">
+        <BreadCumbs title="Cart" to="/" prevPage="Home" />
+        <Link
+          href="/user/transaction"
+          className="text-gray-700 hover:underline"
+        >
+          My Transaction
+        </Link>
+      </div>
       <div className="flex w-full flex-col gap-4 lg:flex-row">
         <Cart />
         <div className="flex bg-gray-50 md:w-2/4 h-fit rounded-lg shadow-md p-6 gap-4 flex-col">
           <h2 className="text-lg text-nowrap font-bold mb-4">Transaction</h2>
           <div className="flex border border-primary-300 drop-shadow-md shadow-lg rounded-xl p-2 flex-col space-y-4">
-            {selectedItems.length > 0 ? (
+            {selectedItems.length >= 0 ? (
               <ul>
                 {selectedItems.map((item) => (
                   <li key={item.activityId} className="flex justify-between">

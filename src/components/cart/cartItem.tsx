@@ -39,7 +39,6 @@ const CartItem = ({
         ? transactionItemsPayload.cartIds.filter((idCart) => idCart !== id)
         : [...transactionItemsPayload.cartIds, id],
     });
-
     toggleSelectItem(activityId);
   };
 

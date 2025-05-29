@@ -1,6 +1,7 @@
 "use client";
 import endpoints from "@/api/endpoints";
 import usePostCart from "@/api/hooks/Cart/usePostCart";
+import { proxiedUrl } from "@/lib/utils";
 import { Activities } from "@/stores/activitiesStore";
 import { useAuthStore } from "@/stores/authStore";
 import { useCartsStore } from "@/stores/cartsStore";
@@ -66,7 +67,7 @@ const ActivityCard = ({
           role="alert"
         >
           <Image
-            src={`${imageUrl}`}
+            src={proxiedUrl(imageUrl)}
             width={1000}
             height={1000}
             alt={`${title}`}
@@ -95,7 +96,7 @@ const ActivityCard = ({
   return (
     <div className="flex w-full bg-white drop-shadow-lg rounded-xl p-2 md:h-52 flex-col md:flex-row ">
       <Image
-        src={`${imageUrl}`}
+        src={proxiedUrl(imageUrl)}
         width={1000}
         height={1000}
         alt={`${title}`}
@@ -118,7 +119,7 @@ const ActivityCard = ({
       </div>
       <div className="flex items-center md:gap-6 md:flex-col md:justify-center justify-between px-2 md:w-2/3 ">
         <div className="flex flex-col md:flex-row gap-2">
-          <h1>Rp. {price_discount.toLocaleString()}</h1>
+          <h1>Rp. {price_discount}</h1>
           <span className="line-through">Rp. {price}</span>
         </div>
         <div className="flex fflex-row items-end gap-2 justify-end">

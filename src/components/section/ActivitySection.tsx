@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useFetchActivity } from "@/api/hooks/Activity/useFetchActivity";
 import endpoints from "@/api/endpoints";
 import { Button } from "../ui/button";
+import { proxiedUrl } from "@/lib/utils";
 
 const ActivitySection: React.FC = () => {
   const { data: activityCategories } = useFetchActivity(endpoints.activity);
@@ -42,7 +43,7 @@ const ActivitySection: React.FC = () => {
           >
             <div className="relative w-full h-56">
               <Image
-                src={activity.imageUrls[0] || "/img/noimage.webp"}
+                src={proxiedUrl(activity.imageUrls[0])}
                 alt={activity.title}
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-110"

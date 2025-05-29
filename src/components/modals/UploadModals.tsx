@@ -2,7 +2,7 @@ import endpoints from "@/api/endpoints";
 import usePostTransaction from "@/api/hooks/Transactions/usePostTransaction";
 import useImageUpload, { FormData } from "@/api/hooks/useImageUpload";
 import { Transaction } from "@/stores/transactionStore";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCopy, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { useState } from "react";
@@ -27,7 +27,6 @@ const UploadModal: React.FC<uploadModal> = ({
     endpoints.updateTransactionProof + id
   );
   const [formData, setFormData] = useState<FormData>({});
-  console.log(transactionById);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -39,7 +38,7 @@ const UploadModal: React.FC<uploadModal> = ({
     modalAction();
   };
   if (!isOpen) return null;
-  console.log(detailOpen);
+  // console.log(detailOpen);
   return (
     <div
       className={`fixed inset-0 flex items-center justify-center bg-white/10 bg-opacity-50 ${
@@ -57,14 +56,18 @@ const UploadModal: React.FC<uploadModal> = ({
         <h2 className="text-xl font-semibold mb-4">Detail Transaksi</h2>
         <div className="flex flex-col gap-2">
           <p className="text-gray-600">Pembayaran untuk:</p>
-          <p className="text-gray-600">{transactionById?.invoiceId}</p>
+          <p className="text-gray-600 font-bold">
+            {transactionById?.invoiceId}
+          </p>
           <p className="text-gray-600">
             Yang harus dibayar: Rp.{" "}
-            {transactionById?.totalAmount.toLocaleString("id-ID")}
+            <span className="font-bold">
+              {transactionById?.totalAmount.toLocaleString("id-ID")}
+            </span>
           </p>
           <div className="text-gray-600 flex gap-2 flex-col">
             <p>Metode pembayaran:</p>
-            <div className="flex items-center w-fit justify-center my-1 drop-shadow-md rounded-lg bg-white/90">
+            <div className="flex items-center w-fit justify-center  drop-shadow-md rounded-sm bg-white/90">
               <Image
                 width={1000}
                 height={1000}
@@ -73,7 +76,7 @@ const UploadModal: React.FC<uploadModal> = ({
                   "/img/noimage.webp"
                 }
                 alt="Preview"
-                className="transition-all w-16 h-8 drop-shadow-lg grayscale hover:grayscale-0"
+                className="transition-all w-16 h-8 drop-shadow-lg "
               />
             </div>
             <p className="text-gray-600 font-semibold">
@@ -82,7 +85,17 @@ const UploadModal: React.FC<uploadModal> = ({
             </p>
             <p className="text-gray-600 font-semibold">
               Virtual Account Number:{" "}
-              {transactionById?.payment_method.virtual_account_number}
+              {transactionById?.payment_method.virtual_account_number}{" "}
+              <FontAwesomeIcon
+                className="text-blue-500 cursor-pointer"
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    transactionById?.payment_method.virtual_account_number
+                  );
+                  toast.success("Virtual Account Number copied!");
+                }}
+                icon={faCopy}
+              />
             </p>
             <div className="flex gap-3"></div>
           </div>
