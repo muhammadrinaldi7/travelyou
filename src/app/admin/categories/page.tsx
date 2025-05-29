@@ -5,9 +5,11 @@ import { usePostCategories } from "@/api/hooks/Categories/usePostCategories";
 import { BreadCumbs } from "@/components/breadcumb/breadCumbs";
 import LayoutDashboard from "@/components/layout/LayoutDashboard";
 import { Button } from "@/components/ui/button";
+import { proxiedUrl } from "@/lib/utils";
 import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -34,8 +36,17 @@ export default function CategoriesPage() {
                     });
                   },
                   onError: (error) => {
+                    if (
+                      error instanceof AxiosError &&
+                      error.response?.data.code == "500"
+                    ) {
+                      toast.error(
+                        "Gagal hapus kategori, pastikan tidak ada aktivitas yang terkait dengan kategori ini."
+                      );
+                    } else {
+                      toast.error("Failed to delete banner.");
+                    }
                     console.error("Failed to delete banner:", error);
-                    toast.error("Failed to delete banner.");
                   },
                 });
               }}
@@ -69,8 +80,8 @@ export default function CategoriesPage() {
             <Image
               width={1000}
               height={1000}
-              alt=""
-              src={category?.imageUrl || "/img/noimage.webp"}
+              alt="Category Image"
+              src={proxiedUrl(category.imageUrl)}
               className="h-56 w-full rounded-bl-3xl rounded-tr-3xl object-cover sm:h-64 lg:h-72"
             />
             <div className="mt-4 sm:flex sm:items-center sm:justify-center sm:gap-4">

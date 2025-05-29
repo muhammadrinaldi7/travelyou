@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { proxiedUrl } from "@/lib/utils";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
@@ -86,7 +87,7 @@ export default function AdminBannersPage() {
                   <TableCell>{banner.name}</TableCell>
                   <TableCell>
                     <Image
-                      src={banner.imageUrl || "/img/noimage.webp"}
+                      src={proxiedUrl(banner.imageUrl)}
                       width={100}
                       height={100}
                       className="w-10 h-10 rounded-lg"

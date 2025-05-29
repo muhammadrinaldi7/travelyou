@@ -27,10 +27,11 @@ import Link from "next/link";
 import { useState } from "react";
 
 export default function TransactonPage() {
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc" | "">("");
+
   const { data: transaction, isLoading } = useFetchAllTransaction(
     endpoints.transaction
   );
-  console.log(transaction);
   const [pagination, setPagination] = useState({
     currentPage: 1,
     itemsPerPage: 5,
@@ -44,17 +45,27 @@ export default function TransactonPage() {
       filter.paymentStatsus === "" ||
       (filter.paymentStatsus === "unpaid" && item.proofPaymentUrl === null) ||
       (filter.paymentStatsus === "paid" && item.proofPaymentUrl !== null);
-
     const matchesNoInvoice =
       filter.noInvoice === "" || item.invoiceId.includes(filter.noInvoice);
 
     return matchesPaymentStatus && matchesNoInvoice;
   });
   const totalItems = transaction?.data.length || 0;
-  const dataTransaction = filteredTransaction?.slice(
+
+  const sortedTransaction = filteredTransaction?.sort((a, b) => {
+    const dateA = new Date(a.orderDate).getTime();
+    const dateB = new Date(b.orderDate).getTime();
+
+    if (sortOrder === "asc") return dateA - dateB; // Terlama dulu
+    if (sortOrder === "desc") return dateB - dateA; // Terbaru dulu
+    return 0; // default
+  });
+
+  const dataTransaction = sortedTransaction?.slice(
     (pagination.currentPage - 1) * pagination.itemsPerPage,
     pagination.currentPage * pagination.itemsPerPage
   );
+
   const handlePageChange = (page: number) => {
     setPagination((prev) => ({ ...prev, currentPage: page }));
   };
@@ -81,6 +92,28 @@ export default function TransactonPage() {
               placeholder="Search by invoice number"
             />
           </div>
+          <div className="w-fit">
+            <label
+              htmlFor="sortOrder"
+              className="block text-sm font-medium text-gray-900"
+            >
+              Sort By Date
+            </label>
+            <select
+              name="sortOrder"
+              id="sortOrder"
+              onChange={(e) => {
+                setPagination((prev) => ({ ...prev, currentPage: 1 }));
+                setSortOrder(e.target.value as "asc" | "desc" | "");
+              }}
+              className="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+            >
+              <option value="">Default</option>
+              <option value="desc">Terbaru</option>
+              <option value="asc">Terlama</option>
+            </select>
+          </div>
+
           <div className="w-fit">
             <label
               htmlFor="filterData"

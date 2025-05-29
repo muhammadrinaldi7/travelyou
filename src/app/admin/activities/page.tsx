@@ -82,8 +82,7 @@ export default function ActivityPage() {
                   {activity.description}
                 </TableCell>
                 <TableCell>
-                  {activity.price.toLocaleString()} /{" "}
-                  {activity.price_discount.toLocaleString()}
+                  {activity.price} / {activity.price_discount}
                 </TableCell>
                 <TableCell>
                   {activity.province}, {activity.city}

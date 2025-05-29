@@ -14,6 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { proxiedUrl } from "@/lib/utils";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -81,7 +82,7 @@ export default function PromosPage() {
               <TableCell>{promo?.minimum_claim_price}</TableCell>
               <TableCell>
                 <Image
-                  src={promo?.imageUrl || "/img/noimage.webp"}
+                  src={proxiedUrl(promo.imageUrl)}
                   width={100}
                   height={100}
                   className="w-10 h-10 rounded-lg"
